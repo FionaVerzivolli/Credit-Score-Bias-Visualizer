@@ -1,6 +1,6 @@
 # Bias Detection Project
 
-This project aims to analyze and detect potential biases in credit scoring systems using a custom dataset and an implementation in C++ for the backend, alongside other tools for visualization and analysis.
+This project aims to analyze and detect potential biases in credit scoring systems using a custom dataset and an implementation in C++ for the backend, alongside other tools for visualization and analysis. This project primarily focuses on African communities and people of African descent.
 
 ---
 
@@ -13,44 +13,6 @@ The project is designed to:
    - False Positive Rates across groups.
    - Demographic Parity.
 3. Provide a modular structure for integrating custom datasets and extending functionality.
-
----
-
-
----
-
-## **Project Components**
-
-### **1. Backend Logic**
-#### **Files**: `user.h`, `userlist.h`, `bias.cpp`
-- **User Class** (`user.h`): Represents an individual entry with attributes like race, gender, economic situation, and credit score.
-- **UserList Class** (`userlist.h`): Manages and processes multiple `User` objects.
-- **Bias Calculations** (`bias.cpp`): Implements algorithms to:
-  - Calculate False Positive Rate (FPR).
-  - Evaluate demographic parity.
-  - Identify communities with lower average credit scores.
-
-### **2. Dataset**
-#### **File**: `custom_large_dataset.json`
-- JSON file containing 50+ entries with attributes for each user.
-- Used for testing and evaluating the bias detection algorithms.
-
-### **3. Metrics**
-The project evaluates the following fairness metrics:
-- **False Positive Rate (FPR)**: Proportion of non-defaulting individuals incorrectly flagged as risky.
-- **Demographic Parity**: Approval rates across demographic groups.
-- **Group Disparity**: Average credit scores between advantaged and disadvantaged groups.
-
----
-
-## **Usage**
-
-1. **Modify the Dataset**:
-   - Update `custom_large_dataset.json` with your own data if needed.
-2. **Extend the Metrics**:
-   - Add new bias detection metrics in `bias.cpp`.
-3. **Visualize Results**:
-   - Use additional tools (e.g., Python, Excel) to analyze outputs if desired.
 
 ---
 
