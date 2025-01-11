@@ -13,14 +13,17 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a working directory inside the container
-WORKDIR /app
+WORKDIR /app/backend
 
-# Copy the source code and CMakeLists.txt to the container
+# Copy source code and CMakeLists.txt to the container
 COPY ./backend /app/backend
 COPY ./CMakeLists.txt /app
 
+# Copy the settings.json file
+COPY ./backend/settings.json /app/backend/settings.json
+
 # Build the C++ project
-RUN cmake . && make
+RUN cmake .. && make
 
 # Expose the port if the application runs as a server
 EXPOSE 8080
