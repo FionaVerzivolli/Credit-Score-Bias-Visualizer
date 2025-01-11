@@ -47,13 +47,11 @@ size_t writeCallback(void *contents, size_t size, size_t nmemb, std::string *out
 }
 
 // Function to fetch data from Supabase (GET request)
-// Function to fetch data from Supabase (GET request)
 void fetchFromSupabase()
 {
     std::string url = getSetting("supabase_url") + "/rest/v1/users";
     std::string apiKey = getSetting("supabase_anon_key");
 
-    // Append the API key as a query parameter (optional but helps avoid errors)
     url += "?apikey=" + apiKey;
 
     std::string response;
@@ -86,15 +84,33 @@ void fetchFromSupabase()
 }
 
 // Function to insert data into Supabase (POST request)
-void insertIntoSupabase(const std::string &name, int age)
+void insertIntoSupabase(const std::string &name, int age, const std::string &race, const std::string &continent,
+                        const std::string &gender, double economicSituation, int creditScore, bool defaulted)
 {
     std::string url = getSetting("supabase_url") + "/rest/v1/users";
     std::string apiKey = getSetting("supabase_anon_key");
 
-    // Append the API key as a query parameter (optional but helps avoid errors)
     url += "?apikey=" + apiKey;
 
-    std::string jsonData = "{\"name\": \"" + name + "\", \"age\": " + std::to_string(age) + "}";
+    std::string jsonData =
+        "{"
+        "\"name\": \"" +
+        name + "\", "
+               "\"age\": " +
+        std::to_string(age) + ", "
+                              "\"race\": \"" +
+        race + "\", "
+               "\"continent\": \"" +
+        continent + "\", "
+                    "\"gender\": \"" +
+        gender + "\", "
+                 "\"economic_situation\": " +
+        std::to_string(economicSituation) + ", "
+                                            "\"credit_score\": " +
+        std::to_string(creditScore) + ", "
+                                      "\"defaulted\": " +
+        (defaulted ? "true" : "false") +
+        "}";
 
     CURL *curl = curl_easy_init();
     if (curl)
@@ -133,7 +149,16 @@ int main()
 
         // Insert a new user into Supabase
         std::cout << "Inserting data into Supabase...\n";
-        insertIntoSupabase("John Doe", 25);
+        insertIntoSupabase(
+            "John Doe",      // name
+            25,              // age
+            "Caucasian",     // race
+            "North America", // continent
+            "Male",          // gender
+            5.50,            // economic_situation
+            680,             // credit_score
+            true             // defaulted
+        );
     }
     catch (const std::exception &e)
     {
