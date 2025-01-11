@@ -50,10 +50,11 @@ function App() {
       <p>Please ensure your dataset follows these guidelines:</p>
       <ul className="instructions-list">
         <li>Race should be one of the following: <strong>"white", "black", "asian", "hispanic", or "other"</strong>.</li>
-        <li>Gender should be <strong>"male", "female", or "non-binary"</strong>.</li>
+        <li>Gender should be <strong>"male", "female", or "other"</strong>.</li>
         <li>Economic situation should be a number between <strong>1.0 and 10.0</strong>.</li>
         <li>Credit score should be an integer between <strong>300 and 850</strong>.</li>
         <li>Defaulted should be <strong>true</strong> or <strong>false</strong>.</li>
+        <li>Continent should be <strong>"north america", "south america", "africa", "europe", "asia", or "oceania"</strong>.</li>
       </ul>
     </section>
     <section className="data-upload">
