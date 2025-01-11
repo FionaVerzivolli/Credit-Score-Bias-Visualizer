@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       {/* Hero Section */}
       <section className="hero">
-        <div className="hero-content">
+        <div className="hero-content animate-fade-in-delayed" >
           <h1 className="title">Bias Analysis in Credit Score</h1>
           <p>Explore potential biases and evaluate fairness metrics.</p>
           <a href="#main-content" className="scroll-down">Visualize</a>
@@ -13,29 +13,69 @@ function App() {
       </section>
 
       <main id="main-content">
-
-        {/* Data Upload Section */}
-        <section className="data-upload animate-slide-in">
+          {/* Dataset Requirement Section*/}
+          <section className="data-instructions">
+          <h2>Dataset Requirements</h2>
+          <p>Please ensure your dataset has the following attributes:</p>
+          <table className="attribute-table">
+            <thead>
+              <tr>
+                <th>user_id</th>
+                <th>age</th>
+                <th>race</th>
+                <th>continent</th>
+                <th>gender</th>
+                <th>economic_situation</th>
+                <th>credit_score</th>
+                <th>defaulted</th>
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                <th>int</th>
+                <th>int</th>
+                <th>string</th>
+                <th>string</th>
+                <th>string</th>
+                <th>double</th>
+                <th>int</th>
+                <th>bool</th>
+              </tr>
+            </thead>
+          </table>
+        </section>
+        <section className="data-instructions">
+      {/* Dataset Instruction Section*/}
+      <h2>Dataset Instructions</h2>
+      <p>Please ensure your dataset follows these guidelines:</p>
+      <ul className="instructions-list">
+        <li>Race should be one of the following: <strong>"white", "black", "asian", "hispanic", or "other"</strong>.</li>
+        <li>Gender should be <strong>"male", "female", or "non-binary"</strong>.</li>
+        <li>Economic situation should be a number between <strong>1.0 and 10.0</strong>.</li>
+        <li>Credit score should be an integer between <strong>300 and 850</strong>.</li>
+        <li>Defaulted should be <strong>true</strong> or <strong>false</strong>.</li>
+      </ul>
+    </section>
+    <section className="data-upload">
           <h2>Upload Dataset</h2>
           <p>Upload your dataset in JSON format to analyze bias.</p>
           <input type="file" accept=".json" />
           <button>Upload</button>
         </section>
-
         {/* Metrics Visualization Section */}
-        <section className="metrics animate-slide-in">
+        <section className="metrics">
           <h2>Bias Metrics</h2>
           <p>View calculated metrics such as False Positive Rate, Demographic Parity, and Group Disparity.</p>
           <div className="metrics-display">
-            <div className="metric animate-fade-in-delayed">
+            <div className="metric">
               <h3>False Positive Rate</h3>
               <p>0.25</p>
             </div>
-            <div className="metric animate-fade-in-delayed">
+            <div className="metric">
               <h3>Demographic Parity</h3>
               <p>0.85</p>
             </div>
-            <div className="metric animate-fade-in-delayed">
+            <div className="metric">
               <h3>Group Disparity</h3>
               <p>0.9</p>
             </div>

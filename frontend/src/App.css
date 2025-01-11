@@ -199,3 +199,89 @@ footer {
 .animate-zoom-in {
   animation: zoom-in 1s ease-in-out;
 }
+/* Dataset Requirements Section */
+.data-instructions {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px;
+
+}
+
+.data-instructions h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-align: center;
+
+}
+
+.data-instructions p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  padding-left: 10vw;
+}
+
+/* Attribute Table */
+.attribute-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 700px;
+  font-size: 1rem;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.attribute-table th {
+  padding: 10px;
+  background-color: #f4f4f4;
+  font-weight: bold;
+  border: 1px solid #ddd;
+}
+
+.attribute-table th,
+.attribute-table td {
+  text-align: center;
+}
+/* Dataset Instructions Section */
+.data-instructions {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.data-instructions h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.data-instructions p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  margin-left: 5vw;
+  color: #555;
+}
+
+.instructions-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #333;
+  font-size: 1rem;
+  margin-left: 5vw;
+
+}
+
+.instructions-list li {
+  margin-bottom: 10px;
+}
+
+.instructions-list strong {
+  color: #000;
+  font-weight: bold;
+}
