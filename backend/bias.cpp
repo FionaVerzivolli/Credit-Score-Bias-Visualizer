@@ -41,6 +41,7 @@ double calculateDemographicParity(const std::vector<User> &users, const std::str
             total++;
         }
     }
+    if (total == 0) return 0.0;
     return static_cast<double>(approved) / total;
 }
 
@@ -60,6 +61,8 @@ double calculateGroupDisparity(const std::vector<User> &users, const std::string
             countGroup2++;
         }
     }
+    if(countGroup1 == 0) return 0.0;
+    if(countGroup2 == 0) return 0.0;
 
     avgScoreGroup1 /= countGroup1;
     avgScoreGroup2 /= countGroup2;
@@ -75,6 +78,8 @@ double calculateAgeAvg(const std::vector<User> &users, const int &age) {
             total++;
         }
     }
+    if (total == 0) return 0.0;
+
     return static_cast<double>(approved) / total;
 }
 
@@ -86,6 +91,7 @@ double calculateGenderAvg(const std::vector<User> &users, const std::string &gen
             total++;
         }
     }
+    if (total == 0) return 0.0;
     return static_cast<double>(approved) / total;
 }
 
@@ -97,6 +103,7 @@ double calculateRaceAvg(const std::vector<User> &users, const std::string &race)
             total++;
         }
     }
+    if (total == 0) return 0.0;
     return static_cast<double>(approved) / total;
 }
 
