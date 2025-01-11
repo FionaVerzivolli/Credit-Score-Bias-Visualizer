@@ -1,0 +1,452 @@
+[
+    {
+        "user_id": 1,
+        "race": "Other",
+        "continent": "Asia",
+        "gender": "Male",
+        "economic_situation": 8.6,
+        "credit_score": 492,
+        "defaulted": true
+    },
+    {
+        "user_id": 2,
+        "race": "Asian",
+        "continent": "Oceania",
+        "gender": "Other",
+        "economic_situation": 6.4,
+        "credit_score": 315,
+        "defaulted": false
+    },
+    {
+        "user_id": 3,
+        "race": "White",
+        "continent": "Europe",
+        "gender": "Female",
+        "economic_situation": 2.3,
+        "credit_score": 776,
+        "defaulted": true
+    },
+    {
+        "user_id": 4,
+        "race": "Hispanic",
+        "continent": "Asia",
+        "gender": "Other",
+        "economic_situation": 5.4,
+        "credit_score": 468,
+        "defaulted": false
+    },
+    {
+        "user_id": 5,
+        "race": "Black",
+        "continent": "Europe",
+        "gender": "Female",
+        "economic_situation": 2.0,
+        "credit_score": 681,
+        "defaulted": false
+    },
+    {
+        "user_id": 6,
+        "race": "Black",
+        "continent": "Asia",
+        "gender": "Female",
+        "economic_situation": 7.9,
+        "credit_score": 780,
+        "defaulted": false
+    },
+    {
+        "user_id": 7,
+        "race": "Hispanic",
+        "continent": "Asia",
+        "gender": "Male",
+        "economic_situation": 2.0,
+        "credit_score": 443,
+        "defaulted": false
+    },
+    {
+        "user_id": 8,
+        "race": "White",
+        "continent": "Asia",
+        "gender": "Female",
+        "economic_situation": 6.0,
+        "credit_score": 815,
+        "defaulted": false
+    },
+    {
+        "user_id": 9,
+        "race": "Asian",
+        "continent": "Asia",
+        "gender": "Other",
+        "economic_situation": 8.7,
+        "credit_score": 775,
+        "defaulted": false
+    },
+    {
+        "user_id": 10,
+        "race": "Other",
+        "continent": "Oceania",
+        "gender": "Other",
+        "economic_situation": 6.1,
+        "credit_score": 375,
+        "defaulted": false
+    },
+    {
+        "user_id": 11,
+        "race": "White",
+        "continent": "America",
+        "gender": "Male",
+        "economic_situation": 8.1,
+        "credit_score": 797,
+        "defaulted": false
+    },
+    {
+        "user_id": 12,
+        "race": "White",
+        "continent": "Europe",
+        "gender": "Male",
+        "economic_situation": 4.8,
+        "credit_score": 615,
+        "defaulted": true
+    },
+    {
+        "user_id": 13,
+        "race": "Black",
+        "continent": "Africa",
+        "gender": "Other",
+        "economic_situation": 7.4,
+        "credit_score": 803,
+        "defaulted": true
+    },
+    {
+        "user_id": 14,
+        "race": "White",
+        "continent": "Asia",
+        "gender": "Other",
+        "economic_situation": 4.2,
+        "credit_score": 360,
+        "defaulted": false
+    },
+    {
+        "user_id": 15,
+        "race": "Black",
+        "continent": "Europe",
+        "gender": "Male",
+        "economic_situation": 5.3,
+        "credit_score": 715,
+        "defaulted": true
+    },
+    {
+        "user_id": 16,
+        "race": "Black",
+        "continent": "Europe",
+        "gender": "Male",
+        "economic_situation": 6.1,
+        "credit_score": 543,
+        "defaulted": true
+    },
+    {
+        "user_id": 17,
+        "race": "Asian",
+        "continent": "Oceania",
+        "gender": "Female",
+        "economic_situation": 3.2,
+        "credit_score": 449,
+        "defaulted": false
+    },
+    {
+        "user_id": 18,
+        "race": "Other",
+        "continent": "America",
+        "gender": "Female",
+        "economic_situation": 4.6,
+        "credit_score": 494,
+        "defaulted": true
+    },
+    {
+        "user_id": 19,
+        "race": "Asian",
+        "continent": "Asia",
+        "gender": "Female",
+        "economic_situation": 1.4,
+        "credit_score": 435,
+        "defaulted": false
+    },
+    {
+        "user_id": 20,
+        "race": "Black",
+        "continent": "America",
+        "gender": "Female",
+        "economic_situation": 8.5,
+        "credit_score": 431,
+        "defaulted": false
+    },
+    {
+        "user_id": 21,
+        "race": "Other",
+        "continent": "Africa",
+        "gender": "Female",
+        "economic_situation": 9.1,
+        "credit_score": 647,
+        "defaulted": true
+    },
+    {
+        "user_id": 22,
+        "race": "Asian",
+        "continent": "America",
+        "gender": "Other",
+        "economic_situation": 2.2,
+        "credit_score": 533,
+        "defaulted": false
+    },
+    {
+        "user_id": 23,
+        "race": "Asian",
+        "continent": "America",
+        "gender": "Female",
+        "economic_situation": 2.2,
+        "credit_score": 513,
+        "defaulted": false
+    },
+    {
+        "user_id": 24,
+        "race": "Other",
+        "continent": "Africa",
+        "gender": "Female",
+        "economic_situation": 7.0,
+        "credit_score": 587,
+        "defaulted": true
+    },
+    {
+        "user_id": 25,
+        "race": "Hispanic",
+        "continent": "Europe",
+        "gender": "Other",
+        "economic_situation": 8.8,
+        "credit_score": 718,
+        "defaulted": false
+    },
+    {
+        "user_id": 26,
+        "race": "Asian",
+        "continent": "Africa",
+        "gender": "Other",
+        "economic_situation": 2.6,
+        "credit_score": 787,
+        "defaulted": true
+    },
+    {
+        "user_id": 27,
+        "race": "Black",
+        "continent": "Africa",
+        "gender": "Male",
+        "economic_situation": 4.7,
+        "credit_score": 670,
+        "defaulted": true
+    },
+    {
+        "user_id": 28,
+        "race": "Hispanic",
+        "continent": "Africa",
+        "gender": "Male",
+        "economic_situation": 3.2,
+        "credit_score": 809,
+        "defaulted": false
+    },
+    {
+        "user_id": 29,
+        "race": "Asian",
+        "continent": "America",
+        "gender": "Male",
+        "economic_situation": 9.0,
+        "credit_score": 540,
+        "defaulted": true
+    },
+    {
+        "user_id": 30,
+        "race": "Hispanic",
+        "continent": "Asia",
+        "gender": "Other",
+        "economic_situation": 5.0,
+        "credit_score": 590,
+        "defaulted": false
+    },
+    {
+        "user_id": 31,
+        "race": "Black",
+        "continent": "Asia",
+        "gender": "Male",
+        "economic_situation": 9.0,
+        "credit_score": 720,
+        "defaulted": false
+    },
+    {
+        "user_id": 32,
+        "race": "White",
+        "continent": "Asia",
+        "gender": "Other",
+        "economic_situation": 7.7,
+        "credit_score": 322,
+        "defaulted": false
+    },
+    {
+        "user_id": 33,
+        "race": "Other",
+        "continent": "Africa",
+        "gender": "Male",
+        "economic_situation": 7.0,
+        "credit_score": 736,
+        "defaulted": false
+    },
+    {
+        "user_id": 34,
+        "race": "Asian",
+        "continent": "Oceania",
+        "gender": "Other",
+        "economic_situation": 3.5,
+        "credit_score": 600,
+        "defaulted": true
+    },
+    {
+        "user_id": 35,
+        "race": "Black",
+        "continent": "Asia",
+        "gender": "Other",
+        "economic_situation": 9.3,
+        "credit_score": 716,
+        "defaulted": false
+    },
+    {
+        "user_id": 36,
+        "race": "White",
+        "continent": "America",
+        "gender": "Other",
+        "economic_situation": 2.5,
+        "credit_score": 710,
+        "defaulted": false
+    },
+    {
+        "user_id": 37,
+        "race": "Asian",
+        "continent": "Asia",
+        "gender": "Female",
+        "economic_situation": 4.9,
+        "credit_score": 522,
+        "defaulted": false
+    },
+    {
+        "user_id": 38,
+        "race": "Other",
+        "continent": "Oceania",
+        "gender": "Other",
+        "economic_situation": 7.0,
+        "credit_score": 849,
+        "defaulted": true
+    },
+    {
+        "user_id": 39,
+        "race": "Asian",
+        "continent": "America",
+        "gender": "Other",
+        "economic_situation": 7.0,
+        "credit_score": 678,
+        "defaulted": true
+    },
+    {
+        "user_id": 40,
+        "race": "White",
+        "continent": "Africa",
+        "gender": "Female",
+        "economic_situation": 1.4,
+        "credit_score": 781,
+        "defaulted": true
+    },
+    {
+        "user_id": 41,
+        "race": "Asian",
+        "continent": "Africa",
+        "gender": "Male",
+        "economic_situation": 7.0,
+        "credit_score": 823,
+        "defaulted": false
+    },
+    {
+        "user_id": 42,
+        "race": "Hispanic",
+        "continent": "Europe",
+        "gender": "Male",
+        "economic_situation": 9.3,
+        "credit_score": 583,
+        "defaulted": false
+    },
+    {
+        "user_id": 43,
+        "race": "Black",
+        "continent": "Europe",
+        "gender": "Other",
+        "economic_situation": 4.1,
+        "credit_score": 738,
+        "defaulted": false
+    },
+    {
+        "user_id": 44,
+        "race": "Other",
+        "continent": "Oceania",
+        "gender": "Male",
+        "economic_situation": 2.8,
+        "credit_score": 399,
+        "defaulted": false
+    },
+    {
+        "user_id": 45,
+        "race": "Hispanic",
+        "continent": "Asia",
+        "gender": "Other",
+        "economic_situation": 6.6,
+        "credit_score": 585,
+        "defaulted": true
+    },
+    {
+        "user_id": 46,
+        "race": "Hispanic",
+        "continent": "Africa",
+        "gender": "Other",
+        "economic_situation": 1.9,
+        "credit_score": 700,
+        "defaulted": true
+    },
+    {
+        "user_id": 47,
+        "race": "Other",
+        "continent": "Europe",
+        "gender": "Female",
+        "economic_situation": 3.6,
+        "credit_score": 400,
+        "defaulted": false
+    },
+    {
+        "user_id": 48,
+        "race": "White",
+        "continent": "Europe",
+        "gender": "Male",
+        "economic_situation": 9.1,
+        "credit_score": 833,
+        "defaulted": true
+    },
+    {
+        "user_id": 49,
+        "race": "Black",
+        "continent": "America",
+        "gender": "Male",
+        "economic_situation": 4.1,
+        "credit_score": 657,
+        "defaulted": false
+    },
+    {
+        "user_id": 50,
+        "race": "Other",
+        "continent": "Oceania",
+        "gender": "Other",
+        "economic_situation": 4.7,
+        "credit_score": 598,
+        "defaulted": false
+    }
+]
