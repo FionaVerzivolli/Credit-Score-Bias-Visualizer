@@ -1,36 +1,28 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
-import { Link } from "react-router-dom";
-import "./App.css";
+import "./css/LoginButton.css"; 
 
-function Login() {
+const LoginButton = () => {
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <div className="login-container">
-      {/* Home Button */}
-      <div className="home-button">
-        <Link to="/" className="home-link">
-          Home
-        </Link>
+      <div className="project-description">
+        <h1 className="login-title">NSBE X P&G Equity Challenge</h1>
+        <p className="description">
+          This project is an innovative solution to combat systemic bias in the
+          financial sector, focusing on improving fairness in credit scoring,
+          access to capital, and detecting/addressing biases in lending
+          algorithms. By evaluating fairness metrics such as False Positive
+          Rate, Demographic Parity, and Group Disparity, this project aims to
+          create impactful, scalable tools to promote greater equity.
+        </p>
       </div>
-
-      <div className="login-box">
-        <h2 className="login-title">Welcome Back!</h2>
-        <p className="login-subtitle">Log in to access and visualize your metrics and insights.</p>
-        <form className="login-form">
-          <input type="text" placeholder="Username" className="input-field" />
-          <input type="password" placeholder="Password" className="input-field" />
-          <button className="login-button">Log In</button>
-        </form>
-        <div className="signup-prompt">
-          <p>
-            Don't have an account?{" "}
-            <Link to="/signup" className="signup-link">
-              Sign Up
-            </Link>
-          </p>
-        </div>
-      </div>
+      <button className="login-button" onClick={() => loginWithRedirect()}>
+        Log In / Sign Up
+      </button>
     </div>
   );
-}
+};
 
-export default Login;
+export default LoginButton;

@@ -2,8 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./login";
 import Upload from "./upload";
-import Signup from "./signup";
+import Home from "./home"
 import "./App.css";
+import Snapshots from "./snapshots";
 
 function App() {
   return (
@@ -20,10 +21,7 @@ function App() {
                   <p>Explore potential biases and evaluate fairness metrics.</p>
                   <div className="button-container">
                     <Link to="/login" className="scroll-down">
-                      Log In
-                    </Link>
-                    <Link to="/signup" className="scroll-down">
-                      Sign Up
+                      Get Started
                     </Link>
                   </div>
 
@@ -32,9 +30,11 @@ function App() {
             }
           />
           {/* Login and Upload Routes */}
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/upload" element={<Upload />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/snapshots" element={<Snapshots />} />
+
         </Routes>
       </div>
     </Router>
