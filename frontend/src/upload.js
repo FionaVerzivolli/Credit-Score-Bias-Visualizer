@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import "./App.css";
 import { getWebSocket } from "./utils/websocket";
 
 function Upload() {
@@ -40,6 +42,8 @@ function Upload() {
       setWebSocket(ws);
     }
   }, []);
+
+  const { logout } = useAuth0();
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -115,18 +119,25 @@ function Upload() {
     if (!gender && !continent && !ageGroup && !race) {
       alert("Please select at least one filter option.");
     } else {
-      console.log("Filtering dataset with filters:", filters);
-      // Add filtering logic here
+      console.log(`Filtering dataset with filters:`, filters);
     }
   };
 
   return (
     <div className="App">
-      {/* Home Button */}
-      <div className="home-button">
-        <Link to="/" className="home-link">
+      {/* Home and Log Out Buttons */}
+      <div className="static-buttons-container">
+        <Link to="/home" className="button-link">
           Home
         </Link>
+        <button
+          onClick={() =>
+            logout({ logoutParams: { returnTo: window.location.origin } })
+          }
+          className="button-link"
+        >
+          Log Out
+        </button>
       </div>
 
       <main id="main-content">
@@ -161,6 +172,39 @@ function Upload() {
             </thead>
           </table>
         </section>
+        <section className="data-instructions">
+          <h2>Dataset Instructions</h2>
+          <p>Please ensure your dataset follows these guidelines:</p>
+          <ul className="instructions-list">
+            <li>
+              Race should be one of the following:{" "}
+              <strong>"white", "black", "asian", "hispanic", or "other"</strong>.
+            </li>
+            <li>
+              Gender should be <strong>"male", "female", or "other"</strong>.
+            </li>
+            <li>
+              Economic situation should be a number between{" "}
+              <strong>1.0 and 10.0</strong>.
+            </li>
+            <li>
+              Credit score should be an integer between{" "}
+              <strong>300 and 850</strong>.
+            </li>
+            <li>
+              Defaulted should be <strong>true</strong> or <strong>false</strong>
+              .
+            </li>
+            <li>
+              Continent should be{" "}
+              <strong>
+                "north america", "south america", "africa", "europe", "asia", or
+                "oceania"
+              </strong>
+              .
+            </li>
+          </ul>
+        </section>
 
         {/* Dataset Instructions */}
         <section className="data-instructions">
@@ -188,6 +232,7 @@ function Upload() {
         </section>
 
         {/* Upload Section */}
+
         <section className="data-upload">
           <h2>Upload Dataset</h2>
           <input type="file" accept=".json" onChange={handleFileChange} />
@@ -200,6 +245,78 @@ function Upload() {
         {/* Filter Section */}
         <section className="filter-section">
           <h2>Filter Dataset</h2>
+          <p>Select attributes to filter the dataset:</p>
+
+          <div className="filter-grid">
+            <div>
+              <select
+                id="race-filter"
+                name="race"
+                value={filters.race}
+                onChange={handleFilterChange}
+                aria-label="Filter by race"
+              >
+                <option value="">-- Race --</option>
+                <option value="white">White</option>
+                <option value="black">Black</option>
+                <option value="asian">Asian</option>
+                <option value="hispanic">Hispanic</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <select
+                id="gender-filter"
+                name="gender"
+                value={filters.gender}
+                onChange={handleFilterChange}
+                aria-label="Filter by gender"
+              >
+                <option value="">-- Gender --</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+
+            <div>
+              <select
+                id="continent-filter"
+                name="continent"
+                value={filters.continent}
+                onChange={handleFilterChange}
+                aria-label="Filter by continent"
+              >
+                <option value="">-- Continent --</option>
+                <option value="asia">Asia</option>
+                <option value="europe">Europe</option>
+                <option value="north-america">North America</option>
+                <option value="south-america">South America</option>
+                <option value="africa">Africa</option>
+                <option value="oceania">Oceania</option>
+              </select>
+            </div>
+
+            <div>
+              <select
+                id="age-filter"
+                name="ageGroup"
+                value={filters.ageGroup}
+                onChange={handleFilterChange}
+                aria-label="Filter by age group"
+              >
+                <option value="">-- Age --</option>
+                <option value="child">Child</option>
+                <option value="teen">Teen</option>
+                <option value="adult">Adult</option>
+                <option value="senior">Senior</option>
+              </select>
+            </div>
+          </div>
+
+          <button onClick={handleFilterClick} className="filter-button">
+            Apply Filters
+          </button>
           <div className="filter-grid">
             <select name="race" onChange={handleFilterChange}>
               <option value="">-- Race --</option>
