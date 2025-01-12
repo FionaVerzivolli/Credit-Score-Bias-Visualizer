@@ -7,9 +7,9 @@ const Home = () => {
   const { logout } = useAuth0();
 
   return (
-    <div className="home-container">
+    <div className="home-container3">
       <button
-        className="logout-button"
+        className="static-buttons-container"
         onClick={() => logout({ logoutParams: { returnTo: "http://localhost:3000" } })}
       >
         Log Out
@@ -23,7 +23,8 @@ const Home = () => {
           designed to evaluate fairness metrics like False Positive Rate,
           Demographic Parity, and Group Disparity, empowering equity in
           financial services. Simply click learn more to learn how these metrics are
-          calculated. We hope that this tool will be used
+          calculated. We hope that this tool will be used to drive meaningful change and foster fairness in financial practices worldwide.
+
         </p>
         <div className="buttonContainer">
           <Link to="/instructions" className="buttonStyle">

@@ -4,16 +4,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     background-color: #f8f9fa; /* Light background for contrast */
     font-family: Arial, sans-serif;
-    padding: 20px;
     text-align: center;
   }
   
   /* Project Title Styling */
-  .project-title {
-    font-size: 3rem; /* Larger font size for the title */
+  .login-title {
+    font-size: 4rem; /* Larger font size for the title */
     font-weight: bold;
     color: #343a40; /* Dark gray */
     margin-bottom: 20px;
@@ -21,19 +19,18 @@
   
   /* Project Description Styling */
   .project-description {
-    font-size: 1.5rem; /* Increased font size for the description */
     color: #495057; /* Medium gray */
     line-height: 1.8; /* Improved readability with line height */
     max-width: 800px; /* Limit width for better formatting */
     margin-bottom: 30px;
   }
   
-
 /* Login Button */
 .login-button {
     font-size: 2rem;
     padding: 10px 20px;
-    max-width: 20vw;
+    max-width: 30vw;
+    max-height:15vh;
     color: white !important; /* Force white color */
     background-color: #3c4047 !important; /* Force the correct color */
     border: none;
@@ -44,37 +41,11 @@
   
   
   .login-button:hover {
-    background-color: #3c4047; /* Darker blue for hover */
-    transform: translateY(-2px); /* Slight lift on hover */
+    background-color: #6f7d95; /* Darker blue for hover */
+    transform: translateY(-1px); /* Slight lift on hover */
   }
   
   .login-button:active {
     background-color: #3c4047; /* Even darker blue for active state */
     transform: translateY(0);
   }
-  
-  /* Upload Button */
-  .upload-button {
-    font-size: 1rem;
-    padding: 10px 20px;
-    color: white;
-    background-color: #3c4047; /* Green for positivity */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .upload-button:hover {
-    background-color: #45a049; /* Slightly darker green for hover */
-    transform: translateY(-2px); /* Slight lift on hover */
-  }
-  
-  .upload-button:active {
-    background-color: #388e3c; /* Even darker green for active state */
-    transform: translateY(0);
-  }
-  .login-title{
-    color: #3c4047;
-  }
-  
