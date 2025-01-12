@@ -50,27 +50,47 @@ function Upload() {
 
   const [snapshotName, setSnapshotName] = useState("");
 
-const handleSaveSnapshot = () => {
-  if (!snapshotName.trim()) {
-    alert("Please provide a valid snapshot name.");
-    return;
-  }
-
-  const snapshot = {
-    name: snapshotName,
-    metrics,
-    overallGrade,
-    timestamp: new Date().toISOString(),
+  const handleSaveSnapshot = () => {
+    if (!snapshotName.trim()) {
+      alert("Please provide a valid snapshot name.");
+      return;
+    }
+  
+    // Prepare the snapshot data
+    const snapshot = {
+      snapshotName: snapshotName, // Pass the snapshot name from the input field
+      userId: user?.sub,  // Include the user ID from Auth0
+      filters: filters,   // Send the currently applied filters
+      metrics: metrics,   // Include the bias metrics
+      overallGrade: overallGrade, // Include the overall grade
+    };
+    console.log(snapshot);
+    // Make the POST request to the save_snapshot_api
+    fetch("http://127.0.0.1:5000/api/save_snapshot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(snapshot),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Snapshot saved successfully:", data);
+        alert(`Snapshot "${snapshotName}" saved successfully!`);
+        setSnapshotName(""); // Reset the input field
+      })
+      .catch((error) => {
+        console.error("Error saving snapshot:", error);
+        alert("Failed to save snapshot. Please try again.");
+      });
   };
-
-  // Simulate saving the snapshot
-  console.log("Snapshot saved:", snapshot);
-
-  // Reset the snapshot name input
-  setSnapshotName("");
-
-  alert(`Snapshot "${snapshotName}" saved successfully!`);
-};
+  
+  
 
 
   const { logout } = useAuth0();
@@ -332,7 +352,6 @@ const handleSaveSnapshot = () => {
   </div>
   
   <section>
-  {/* Save Snapshot Section */}
   <div className="save-snapshot">
     <input
       type="text"
@@ -344,7 +363,7 @@ const handleSaveSnapshot = () => {
     <button onClick={handleSaveSnapshot} className="snapshot-button">
       Save Snapshot
     </button>
-    </div>
+  </div>
 </section>
 </main>
 
