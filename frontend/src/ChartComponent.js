@@ -39,7 +39,6 @@ const ChartComponent = () => {
 
   return (
     <div className="chart-container">
-      <h2>Sample Chart</h2>
       <canvas id="chartCanvas" width="400" height="200"></canvas>
     </div>
   );

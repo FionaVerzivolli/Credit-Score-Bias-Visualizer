@@ -175,7 +175,7 @@ const handleSaveSnapshot = () => {
         {/* Upload Section */}
 
         <section className="data-upload">
-          <h2>Upload Dataset in JSON</h2>
+          <h2>Upload Dataset in JSON Format</h2>
           <input type="file" accept=".json" onChange={handleFileChange} />
         </section>
 
@@ -277,16 +277,11 @@ const handleSaveSnapshot = () => {
     <button onClick={handleSaveSnapshot} className="snapshot-button">
       Save Snapshot
     </button>
-  </div>
+    </div><div>
+    <ChartComponent metrics={metrics} />
+    </div>
 </section>
-
 </main>
-
-{/* Chart Section */}
-<section className="chart-section">
-  <h3>Visualized Metrics</h3>
-  <ChartComponent metrics={metrics} />
-</section>
 
 <footer>
   <p>&copy; 2025 Bias Visualizer Project</p>
