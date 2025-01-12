@@ -2,9 +2,19 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from bias import calculate_filtered_false_positive_rate, calculate_filtered_demographic_parity, calculate_group_disparity, assign_letter_grade
 from firebase import get_data_with_user_sub, save_data, delete_data
+from datetime import datetime
+
+
 
 app = Flask(__name__)
 CORS(app)  # allow requests from React frontend
+user = 0
+filters = 0
+false_positive_rate = 0
+demographic_parity = 0
+group_disparity = 0
+overall_grade = 0
+
 
 def lowercase_data(data):
     """convert all keys and values in a dictionary or list to lowercase."""
@@ -54,17 +64,6 @@ def apply_filters():
             "overallGrade": overall_grade
         }
 
-        # Save the snapshot to Firebase under the user's ID
-        try:
-            reference_path = f"snapshots/{user}"  # Define a path like snapshots/{userId}
-            save_data(reference_path, snapshot)
-            print(f"Snapshot saved to {reference_path}")
-        except Exception as save_error:
-            print(f"Error saving snapshot to Firebase: {save_error}")
-            return jsonify({"message": "Failed to save snapshot to the database"}), 500
-
-        print(snapshot)
-
         return jsonify({
             "message": "Filters applied and snapshot saved successfully!",
             "snapshot": snapshot
@@ -72,6 +71,63 @@ def apply_filters():
     except Exception as e:
         print("Error:", str(e))
         return jsonify({"message": "An error occurred while applying filters"}), 500
+
+
+@app.route('/api/save_snapshot', methods=['POST'])
+def save_snapshot_api():
+    try:
+        print("Tried saving")
+        data = request.json  # Get JSON data from the request body
+        print("Incoming data:", data)  # Debug the data
+        
+        # Extract the user ID and snapshot name
+        user = data.get("userId", None)
+        snapshot_name = data.get("snapshotName", None)
+        
+        if not user:
+            print("userid is missing")
+            return jsonify({"message": "User ID is missing from the request"}), 400
+
+        if not snapshot_name:
+            print("snapshot name is missing")
+            return jsonify({"message": "Snapshot name is missing from the request"}), 400
+
+
+
+        # Save the snapshot to Firebase under a unique ID
+        try:
+            # Prepare the snapshot to be saved
+            snapshot = {
+                "userId": user,
+                "snapshotName": snapshot_name,  # Include snapshot name
+                "filtersApplied": filters,
+                "metrics": {
+                    "falsePositiveRate": false_positive_rate,
+                    "demographicParity": demographic_parity,
+                    "groupDisparity": group_disparity
+                },
+                "overallGrade": overall_grade,
+                "timestamp": datetime.utcnow().isoformat()  # Include a timestamp for the snapshot
+            }
+            # Generate a unique ID for the snapshot using snapshot name and a timestamp
+            unique_id = f"{snapshot_name}_{datetime.utcnow().strftime('%Y%m%d%H%M%S%f')}"
+            reference_path = f"snapshots/{user}/{unique_id}"  # Path: snapshots/{user}/{snapshot_name_timestamp}
+            save_data(reference_path, snapshot)
+            print(f"Snapshot saved to {reference_path}")
+        except Exception as save_error:
+            print(f"Error saving snapshot to Firebase: {save_error}")
+            return jsonify({"message": "Failed to save snapshot to the database"}), 500
+
+        # Return success response
+        return jsonify({
+            "message": "Snapshot saved successfully!",
+            "snapshot": snapshot
+        })
+    except Exception as e:
+        print(f"Error in save_snapshot_api: {e}")
+        return jsonify({"message": "An error occurred while saving snapshot"}), 500
+
+
 
 
 @app.route('/api/get_user_data', methods=['POST'])
