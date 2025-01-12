@@ -2,16 +2,18 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-# Fetch the service account key JSON file contents
-cred = credentials.Certificate('secret key.json')
+def get_credentials():
+    # Fetch the service account key JSON file contents
+    cred = credentials.Certificate('secret key.json')
 
-# Initialize the app with a service account, granting admin privileges
-firebase_admin.initialize_app(cred, {
-    'databaseURL': "URL to database"
-})
+    # Initialize the app with a service account, granting admin privileges
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': "https://deltahacks-1334c-default-rtdb.firebaseio.com/"
+    })
 
 # Function to retrieve all references containing the user.sub
 def get_data_with_user_sub(reference_path, user_sub):
+    get_credentials()
     try:
         ref = db.reference(reference_path)
         data = ref.get()
@@ -47,6 +49,7 @@ def get_data_with_user_sub(reference_path, user_sub):
 
 # Function to save data to a given reference
 def save_data(reference_path, data):
+    get_credentials()
     try:
         ref = db.reference(reference_path)
         ref.set(data)
@@ -57,6 +60,7 @@ def save_data(reference_path, data):
 
 # Function to delete data at a given reference
 def delete_data(reference_path):
+    get_credentials()
     try:
         ref = db.reference(reference_path)
         ref.delete()
