@@ -10,6 +10,39 @@ body {
 .App {
   text-align: center;
 }
+.App2 {
+  text-align: center;
+  background: linear-gradient(135deg, #908b8b, #2a2a2a); /* Dark gradient */
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  margin: 0; /* Remove any default margins */
+  padding: 0; /* Remove any default padding */
+  display: flex; /* Ensure content centers properly */
+  flex-direction: column; /* For vertical stacking of child elements */
+}
+
+.App3 {
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff, #698693); /* Dark gradient */
+  height: 200vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  margin: 0; /* Remove any default margins */
+  padding: 0; /* Remove any default padding */
+  display: flex; /* Ensure content centers properly */
+  flex-direction: column; /* For vertical stacking of child elements */
+}
+
+.App4 {
+  text-align: center;
+  background: linear-gradient(135deg, #b5b5b5, #2a2a2a); /* Dark gradient */
+  min-height: 100vh; /* Ensures the background covers at least the viewport height */
+  width: 100vw; /* Full viewport width */
+  margin: 0; /* Remove any default margins */
+  padding: 0; /* Remove any default padding */
+  display: flex; /* Enable flexbox for layout */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: space-between; /* Ensure content is spaced appropriately */
+}
 
 /* Header Styling */
 .App-header {
@@ -47,7 +80,6 @@ body {
   margin: 10px 0 30px;
   line-height: 1.6; /* Add spacing for readability */
 }
-
 
 .scroll-down:hover {
   background-color: white;
@@ -392,7 +424,7 @@ footer {
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: bold;
-  background-color: #282c34;
+  background-color: #3d3d3d;
   color: white;
   border: none;
   border-radius: 4px;
@@ -431,17 +463,6 @@ footer {
   line-height: 1.5;
 }
 
-.login-button {
-  font-size: 1rem;
-  padding: 10px 20px;
-  color: white;
-  background-color: #007bff; /* Bootstrap primary blue */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
 .login-button:hover {
   background-color: #3c4047; /* Darker blue for hover */
 }
@@ -476,6 +497,34 @@ footer {
   cursor: pointer;
 }
 
+.button-link2 {
+  padding: 10px 20px;
+  background-color: #3d3d3d;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.button-link3 {
+  padding: 10px 20px;
+  background-color: #353434;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
 .button-link:hover {
   background-color: #3c4047; /* Slightly lighter color for hover effect */
 }
@@ -495,13 +544,13 @@ footer {
   width: 200px;
 }
 .snapshot-button {
-  background-color: #282c34;
+  background-color: #3d3d3d;
   color: white;
   border: none;
   padding: 5px 15px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: background-color 0.3s ease;
 }
 

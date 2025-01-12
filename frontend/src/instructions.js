@@ -7,17 +7,17 @@ function Instructions() {
   const { logout } = useAuth0(); // Ensure logout function is correctly imported from Auth0
 
   return (
-    <div className="App">
+    <div className="App2">
       {/* Home and Log Out Buttons */}
       <div className="static-buttons-container">
-        <Link to="/home" className="button-link">
+        <Link to="/home" className="button-link2">
           Home
         </Link>
         <button
           onClick={() =>
             logout({ logoutParams: { returnTo: window.location.origin } })
           }
-          className="button-link"
+          className="button-link2"
         >
           Log Out
         </button>
@@ -80,7 +80,7 @@ function Instructions() {
             </li>
           </ul>
         </section>
-        <Link to="/upload" className="button-link">
+        <Link to="/upload" className="button-link3">
           Upload Dataset
         </Link>
       </main>
