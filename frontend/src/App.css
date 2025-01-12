@@ -491,26 +491,35 @@ footer {
 .filter-section {
   margin: 20px auto;
   padding: 20px;
-  max-width: 600px;
-  border: 1px solid #ddd;
+  max-width: 800px; /* Allow wider width for all filters in a row */
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
+}
+
+/* Grid Layout for Filters */
+.filter-section .filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four columns for filters */
+  gap: 20px; /* Spacing between filters */
+  align-items: center; /* Vertically align items */
+  margin-bottom: 20px; /* Space below the grid */
 }
 
 .filter-section label {
   display: block;
   font-weight: bold;
-  margin: 10px 0 5px;
-  font-size: 1rem;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
   color: #444;
+  text-align: left; /* Align labels to the left */
 }
 
+/* Dropdown Styling */
 .filter-section select {
-  width: 80%;
+  width: 100%; /* Full width of grid cell */
   padding: 10px;
-  margin-bottom: 15px;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -527,6 +536,8 @@ footer {
 
 /* Filter Button Styling */
 .filter-button {
+  display: block; /* Ensure the button is on its own line */
+  margin: 20px auto 0; /* Center the button and add space above */
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: bold;
