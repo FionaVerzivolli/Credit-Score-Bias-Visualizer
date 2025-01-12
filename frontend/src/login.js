@@ -9,7 +9,7 @@ const LoginButton = () => {
     <div className="login-container">
       <div className="project-description">
         <h1 className="login-title">NSBE X P&G Equity Challenge</h1>
-        <p className="description">
+        <p className="login-description">
           This project is an innovative solution to combat systemic bias in the
           financial sector, focusing on improving fairness in credit scoring,
           access to capital, and detecting/addressing biases in lending
