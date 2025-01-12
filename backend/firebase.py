@@ -11,9 +11,10 @@ def initialize_firebase():
         })
 
 
-# Function to retrieve all references containing the user.sub
-def get_data_with_user_sub(reference_path, user_sub):
+# Function to retrieve all references containing the user.sub within 'snapshots'
+def get_data_with_user_sub(user_sub):
     initialize_firebase()  # Ensure Firebase is initialized
+    reference_path = "snapshots"
     try:
         ref = db.reference(reference_path)
         data = ref.get()
@@ -22,7 +23,7 @@ def get_data_with_user_sub(reference_path, user_sub):
             print(f"No data found at {reference_path}")
             return None
 
-        # Search for references that contain the user.sub
+        # Search for references that contain the user.sub within 'snapshots'
         matching_references = {}
 
         def find_matches(data, path=""):
@@ -30,6 +31,7 @@ def get_data_with_user_sub(reference_path, user_sub):
                 for key, value in data.items():
                     new_path = f"{path}/{key}" if path else key
                     if user_sub in str(key) or user_sub in str(value):
+                        # If a match is found, store the entire node's contents
                         matching_references[new_path] = value
                     find_matches(value, new_path)
 
@@ -45,6 +47,7 @@ def get_data_with_user_sub(reference_path, user_sub):
     except Exception as e:
         print(f"Error retrieving data with user.sub {user_sub}: {e}")
         return None
+
 
 
 # Function to save data to a given reference
@@ -69,23 +72,11 @@ def delete_data(reference_path):
         print(f"Error deleting data from {reference_path}: {e}")
 
 
-# Example usage
 if __name__ == "__main__":
-    # Define a test reference path
-    test_reference = "example/data"
 
-    # Save data
-    sample_data = {
-        "user1": {"name": "Alice", "age": 25, "city": "New York"},
-        "user2": {"name": "Bob", "age": 30, "city": "San Francisco"}
-    }
-    save_data(test_reference, sample_data)
+    # User sub to search for
+    user_sub = "google-oauth2|102358690028127056038"  # Replace with the actual user.sub value
 
-    # Retrieve and print data
-    data = get_data_with_user_sub("example", "user1")
-    print("Retrieved data:", data)
-
-    # Delete data
-    delete_data(test_reference)
-    deleted_data = get_data_with_user_sub("example", "user1")
-    print("Data after deletion:", deleted_data)
+    # Retrieve and print matching data
+    matching_data = get_data_with_user_sub(user_sub)
+    print("Matching data:", matching_data)

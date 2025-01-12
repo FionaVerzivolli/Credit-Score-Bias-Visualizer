@@ -83,7 +83,7 @@ def save_snapshot_api():
         # Extract the user ID and snapshot name
         user = data.get("userId", None)
         snapshot_name = data.get("snapshotName", None)
-        
+        snapshot = data.get("metrics")
         if not user:
             print("userid is missing")
             return jsonify({"message": "User ID is missing from the request"}), 400
@@ -92,7 +92,10 @@ def save_snapshot_api():
             print("snapshot name is missing")
             return jsonify({"message": "Snapshot name is missing from the request"}), 400
 
-
+        false_positive_rate = snapshot.get("falsePositiveRate", 0)
+        demographic_parity = snapshot.get("demographicParity", 0)
+        group_disparity = snapshot.get("groupDisparity", 0)
+        overall_grade = data.get("overallGrade", "F")
 
         # Save the snapshot to Firebase under a unique ID
         try:
@@ -129,11 +132,11 @@ def save_snapshot_api():
 
 
 
-
 @app.route('/api/get_user_data', methods=['POST'])
 def get_user_data_api():
     try:
-        data = request.json  # Get JSON data from the request body
+        # Retrieve JSON data from the request body
+        data = request.json
         user_id = data.get("userId", None)
         
         if not user_id:
@@ -141,48 +144,54 @@ def get_user_data_api():
         
         print(f"Retrieving data for user ID: {user_id}")
         
-        # Call the get_user_data function to fetch data for the user
-        user_data = get_user_data(user_id)
+        # Fetch user data using the get_data_with_user_sub function
+        user_data = get_data_with_user_sub(user_id)
         
         if not user_data:
             return jsonify({
-                "message": f"No data found for user ID: {user_id}",
-                "data": None
+                "message": f"No snapshots found for user ID: {user_id}",
+                "snapshots": []
             }), 404
+
+        # Debug output
+        print("Fetched user data:", user_data)
+
+        # Extract snapshots (filter out non-snapshot keys)
+        snapshots = []
+        for key, snapshot in user_data.items():
+            # Skip non-snapshot keys
+            if not isinstance(snapshot, dict) or "snapshotName" not in snapshot:
+                continue
+            
+            snapshots.append({
+                "id": key,  # Firebase key as ID
+                "name": snapshot.get("snapshotName", f"Snapshot {key}"),
+                "timestamp": snapshot.get("timestamp", "N/A"),
+                "falsePositiveRate": snapshot["metrics"].get("falsePositiveRate", 0),
+                "demographicParity": snapshot["metrics"].get("demographicParity", 0),
+                "groupDisparity": snapshot["metrics"].get("groupDisparity", 0),
+                "grade": snapshot.get("overallGrade", "N/A")
+            })
         
+        # Check if snapshots list is empty
+        if not snapshots:
+            return jsonify({
+                "message": f"No snapshots found for user ID: {user_id}",
+                "snapshots": []
+            }), 404
+
+        # Return the processed snapshots
         return jsonify({
-            "message": "User data retrieved successfully!",
-            "data": user_data
+            "message": "Snapshots retrieved successfully!",
+            "snapshots": snapshots
         })
+
     except Exception as e:
         print(f"Error in get_user_data_api: {e}")
-        return jsonify({"message": "An error occurred while retrieving user data"}), 500
+        return jsonify({"message": "An error occurred while retrieving snapshots"}), 500
 
 
-def get_user_data(user_id):
-    try:
-        # Define the root path to search for user-related data
-        root_reference = "snapshots"
-        
-        # Get all data under the root reference
-        all_data = get_data_with_user_sub(root_reference)
-        
-        if not all_data:
-            print("No data found in the database.")
-            return None
-        
-        # Filter data by user ID
-        user_data = {key: value for key, value in all_data.items() if value.get("userId") == user_id}
-        
-        if not user_data:
-            print(f"No data found for user ID: {user_id}")
-            return None
-        
-        print(f"Data for user {user_id}: {user_data}")
-        return user_data
-    except Exception as e:
-        print(f"Error retrieving data for user {user_id}: {e}")
-        return None
+
 
 
 if __name__ == '__main__':
