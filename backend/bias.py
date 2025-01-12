@@ -1,8 +1,7 @@
 '''
 Note: we don't need the classes right now, but I 
 won't delete them in case we want to use OOP pillars
-or if we want to extend our code later.
-'''
+or if we want to extend our code later.'''
 class User:
     def __init__(self, user_id, credit_score, gender, race, continent, age, defaulted):
         self.user_id = user_id
