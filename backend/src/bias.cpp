@@ -52,30 +52,33 @@ double calculateFilteredDemographicParity(const std::vector<User>& users, const 
     return total > 0 ? static_cast<double>(approved) / total : 0.0;
 }
 
-
-// calculate group disparity between two filtered groups
-double calculateGroupDisparity(const std::vector<User>& users, const Filter& group1Filters, const Filter& group2Filters) {
-    double avgScoreGroup1 = 0, avgScoreGroup2 = 0;
-    int countGroup1 = 0, countGroup2 = 0;
+// Calculate group disparity between one filtered group and all other users
+double calculateGroupDisparity(const std::vector<User>& users, const Filter& groupFilters) {
+    double avgScoreGroup = 0, avgScoreOthers = 0;
+    int countGroup = 0, countOthers = 0;
 
     for (const auto& user : users) {
-        if (userMatchesFilters(user, group1Filters)) {
-            avgScoreGroup1 += user.credit_score;
-            countGroup1++;
-        } else if (userMatchesFilters(user, group2Filters)) {
-            avgScoreGroup2 += user.credit_score;
-            countGroup2++;
+        if (userMatchesFilters(user, groupFilters)) {
+            // User belongs to the specified group
+            avgScoreGroup += user.credit_score;
+            countGroup++;
+        } else {
+            // User belongs to all other groups
+            avgScoreOthers += user.credit_score;
+            countOthers++;
         }
     }
 
-    if (countGroup1 == 0 || countGroup2 == 0) return 0.0;
+    // If either group has no users, return 0.0 as the disparity
+    if (countGroup == 0 || countOthers == 0) return 0.0;
 
-    avgScoreGroup1 /= countGroup1;
-    avgScoreGroup2 /= countGroup2;
+    // Calculate average scores
+    avgScoreGroup /= countGroup;
+    avgScoreOthers /= countOthers;
 
-    return avgScoreGroup2 > 0 ? avgScoreGroup1 / avgScoreGroup2 : 0.0;
+    // Return the disparity (ratio of the group's average to the others')
+    return avgScoreOthers > 0 ? avgScoreGroup / avgScoreOthers : 0.0;
 }
-
 // assign a letter grade based on bias metrics
 std::string assignLetterGrade(double fpr, double disparity) {
     if (fpr <= 0.1 && disparity >= 0.9)
