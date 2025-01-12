@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from bias import calculate_filtered_false_positive_rate, calculate_filtered_demographic_parity, calculate_group_disparity, assign_letter_grade
-from firebase import get_data, save_data, update_data, delete_data
+from firebase import get_data, save_data, delete_data
 
 app = Flask(__name__)
 CORS(app)  # allow requests from React frontend

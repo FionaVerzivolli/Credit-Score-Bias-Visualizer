@@ -73,15 +73,29 @@ const handleSaveSnapshot = () => {
 
   const { logout } = useAuth0();
 
+  const [fileContent, setFileContent] = useState(null);
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type === "application/json") {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const content = JSON.parse(e.target.result);
+          setFileContent(content); // Store parsed JSON in state
+        } catch (error) {
+          alert("Invalid JSON file.");
+          setFileContent(null);
+        }
+      };
+      reader.readAsText(selectedFile);
       setFile(selectedFile);
     } else {
       alert("Please select a valid JSON file.");
       setFile(null);
     }
   };
+  
 
   const handleUpload = () => {
     if (!file) {
@@ -143,75 +157,48 @@ const handleSaveSnapshot = () => {
   };
 
   const handleFilterClick = () => {
+    if (!fileContent) {
+      alert("No valid file content found. Please upload a valid JSON file.");
+      return;
+    }
+  
     const { gender, continent, ageGroup, race } = filters;
     if (!gender && !continent && !ageGroup && !race) {
       alert("Please select at least one filter option.");
-    } else {
-      console.log(`Filtering dataset with filters:`, filters);
+      return;
     }
-
   
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const fileContent = e.target.result;
+    const payload = {
+      filters: { gender, continent, ageGroup, race },
+      fileContent, // Use parsed content from state
+    };
   
-      if (!gender && !continent && !ageGroup && !race) {
-        alert("Please select at least one filter option.");
-        return;
-      }
-  
-      const payload = {
-        filters: {
-          gender,
-          continent,
-          ageGroup,
-          race,
-        },
-        fileContent: JSON.parse(fileContent), // Parse the file content as JSON
-      };
-  
-      // Send the payload to the Flask backend
-      fetch("http://127.0.0.1:5000/api/filter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+    fetch("http://127.0.0.1:5000/api/filter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return response.json();
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Filtered data from backend:", data);
-  
-          // Extract metrics and overall grade from the response
-          const { snapshot } = data;
-  
-          setMetrics({
-            falsePositiveRate: snapshot.metrics.falsePositiveRate,
-            demographicParity: snapshot.metrics.demographicParity,
-            groupDisparity: snapshot.metrics.groupDisparity,
-          });
-          setOverallGrade(snapshot.overallGrade);
-  
-          alert("Filters applied successfully!");
-        })
-        .catch((error) => {
-          console.error("Error applying filters:", error);
-          alert("Failed to apply filters. Please try again.");
+      .then((data) => {
+        const { snapshot } = data;
+        console.log(snapshot);
+        setMetrics({
+          falsePositiveRate: snapshot.metrics.falsePositiveRate,
+          demographicParity: snapshot.metrics.demographicParity,
+          groupDisparity: snapshot.metrics.groupDisparity,
         });
-    };
-  
-    reader.onerror = () => {
-      console.error("Error reading file.");
-      alert("Failed to read the file. Please try again.");
-    };
-  
-    reader.readAsText(file); // Read the file content
+        setOverallGrade(snapshot.overallGrade);
+        alert("Filters applied successfully!");
+      })
+      .catch((error) => {
+        console.error("Error applying filters:", error);
+        alert("Failed to apply filters. Please try again.");
+      });
   };
+  
 
 
   return (
