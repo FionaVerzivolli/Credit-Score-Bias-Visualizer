@@ -13,7 +13,7 @@ const Snapshots = () => {
     if (user) {
       const fetchSnapshots = async () => {
         try {
-          const response = await fetch("http://127.0.0.1:5000/api/get_user_data", {
+          const response = await fetch("https://andrewsasmito05.pythonanywhere.com/api/get_user_data", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
