@@ -287,10 +287,6 @@ function Upload() {
         <section className="data-upload">
           <h2>Upload Dataset in JSON</h2>
           <input type="file" accept=".json" onChange={handleFileChange} />
-          <button onClick={handleUpload} disabled={!isWebSocketReady}>
-            Upload
-          </button>
-          {!isWebSocketReady && <p>Waiting for WebSocket connection...</p>}
         </section>
 
         {/* Filter Section */}
