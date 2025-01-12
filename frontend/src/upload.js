@@ -234,7 +234,7 @@ function Upload() {
         {/* Upload Section */}
 
         <section className="data-upload">
-          <h2>Upload Dataset</h2>
+          <h2>Upload Dataset in JSON</h2>
           <input type="file" accept=".json" onChange={handleFileChange} />
           <button onClick={handleUpload} disabled={!isWebSocketReady}>
             Upload
@@ -276,6 +276,7 @@ function Upload() {
                 <option value="">-- Gender --</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
+                <option value="other">Other</option>
               </select>
             </div>
 
@@ -317,34 +318,7 @@ function Upload() {
           <button onClick={handleFilterClick} className="filter-button">
             Apply Filters
           </button>
-          <div className="filter-grid">
-            <select name="race" onChange={handleFilterChange}>
-              <option value="">-- Race --</option>
-              <option value="white">White</option>
-              <option value="black">Black</option>
-              <option value="asian">Asian</option>
-              <option value="hispanic">Hispanic</option>
-              <option value="other">Other</option>
-            </select>
-            <select name="gender" onChange={handleFilterChange}>
-              <option value="">-- Gender --</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-            <select name="continent" onChange={handleFilterChange}>
-              <option value="">-- Continent --</option>
-              <option value="asia">Asia</option>
-              <option value="europe">Europe</option>
-            </select>
-            <select name="ageGroup" onChange={handleFilterChange}>
-              <option value="">-- Age --</option>
-              <option value="child">Child</option>
-              <option value="teen">Teen</option>
-            </select>
-          </div>
-          <button onClick={handleFilterClick}>Apply Filters</button>
-        </section>
-
+          </section>
         {/* Metrics Section */}
         <section className="metrics">
           <h2>Bias Metrics</h2>
