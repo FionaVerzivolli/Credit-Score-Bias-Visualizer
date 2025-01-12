@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
 import { getWebSocket } from "./utils/websocket";
 
+
 function Upload() {
   const [file, setFile] = useState(null);
   const [webSocket, setWebSocket] = useState(null);
@@ -42,6 +43,31 @@ function Upload() {
       setWebSocket(ws);
     }
   }, []);
+
+  const [snapshotName, setSnapshotName] = useState("");
+
+const handleSaveSnapshot = () => {
+  if (!snapshotName.trim()) {
+    alert("Please provide a valid snapshot name.");
+    return;
+  }
+
+  const snapshot = {
+    name: snapshotName,
+    metrics,
+    overallGrade,
+    timestamp: new Date().toISOString(),
+  };
+
+  // Simulate saving the snapshot
+  console.log("Snapshot saved:", snapshot);
+
+  // Reset the snapshot name input
+  setSnapshotName("");
+
+  alert(`Snapshot "${snapshotName}" saved successfully!`);
+};
+
 
   const { logout } = useAuth0();
 
@@ -130,6 +156,9 @@ function Upload() {
         <Link to="/home" className="button-link">
           Home
         </Link>
+        <Link to="/instructions" className="button-link">
+          Instructions
+        </Link>
         <button
           onClick={() =>
             logout({ logoutParams: { returnTo: window.location.origin } })
@@ -141,96 +170,6 @@ function Upload() {
       </div>
 
       <main id="main-content">
-        {/* Dataset Requirement Section */}
-        <section className="data-instructions">
-          <h2>Dataset Requirements</h2>
-          <p>Please ensure your dataset has the following attributes:</p>
-          <table className="attribute-table">
-            <thead>
-              <tr>
-                <th>user_id</th>
-                <th>age</th>
-                <th>race</th>
-                <th>continent</th>
-                <th>gender</th>
-                <th>economic_situation</th>
-                <th>credit_score</th>
-                <th>defaulted</th>
-              </tr>
-            </thead>
-            <thead>
-              <tr>
-                <th>int</th>
-                <th>int</th>
-                <th>string</th>
-                <th>string</th>
-                <th>string</th>
-                <th>double</th>
-                <th>int</th>
-                <th>bool</th>
-              </tr>
-            </thead>
-          </table>
-        </section>
-        <section className="data-instructions">
-          <h2>Dataset Instructions</h2>
-          <p>Please ensure your dataset follows these guidelines:</p>
-          <ul className="instructions-list">
-            <li>
-              Race should be one of the following:{" "}
-              <strong>"white", "black", "asian", "hispanic", or "other"</strong>.
-            </li>
-            <li>
-              Gender should be <strong>"male", "female", or "other"</strong>.
-            </li>
-            <li>
-              Economic situation should be a number between{" "}
-              <strong>1.0 and 10.0</strong>.
-            </li>
-            <li>
-              Credit score should be an integer between{" "}
-              <strong>300 and 850</strong>.
-            </li>
-            <li>
-              Defaulted should be <strong>true</strong> or <strong>false</strong>
-              .
-            </li>
-            <li>
-              Continent should be{" "}
-              <strong>
-                "north america", "south america", "africa", "europe", "asia", or
-                "oceania"
-              </strong>
-              .
-            </li>
-          </ul>
-        </section>
-
-        {/* Dataset Instructions */}
-        <section className="data-instructions">
-          <h2>Dataset Instructions</h2>
-          <ul className="instructions-list">
-            <li>
-              Race should be one of: <strong>"white", "black", "asian", "hispanic", "other"</strong>.
-            </li>
-            <li>
-              Gender should be <strong>"male", "female", "other"</strong>.
-            </li>
-            <li>
-              Economic situation should be a number between <strong>1.0 and 10.0</strong>.
-            </li>
-            <li>
-              Credit score should be an integer between <strong>300 and 850</strong>.
-            </li>
-            <li>
-              Defaulted should be <strong>true</strong> or <strong>false</strong>.
-            </li>
-            <li>
-              Continent should be <strong>"north america", "south america", "africa", "europe", "asia", or "oceania"</strong>.
-            </li>
-          </ul>
-        </section>
-
         {/* Upload Section */}
 
         <section className="data-upload">
@@ -239,7 +178,7 @@ function Upload() {
           <button onClick={handleUpload} disabled={!isWebSocketReady}>
             Upload
           </button>
-          {!isWebSocketReady && <p>Waiting for WebSocket connection...</p>}
+          {!isWebSocketReady}
         </section>
 
         {/* Filter Section */}
@@ -326,13 +265,24 @@ function Upload() {
             <div>False Positive Rate: {metrics.falsePositiveRate || "N/A"}</div>
             <div>Demographic Parity: {metrics.demographicParity || "N/A"}</div>
             <div>Group Disparity: {metrics.groupDisparity || "N/A"}</div>
+            <div>Overall Grade: {metrics.overallGrade || "N/A"}</div>
+
           </div>
         </section>
-
-        {/* Results Section */}
-        <section className="results">
-          <h2>Analysis Results</h2>
-          <h3>Overall Grade: {overallGrade || "N/A"}</h3>
+        {/* Save Snapshot Section */}
+        <section className="save-snapshot">
+          <h2>Save Snapshot</h2>
+          <p>Provide a name for your snapshot and save it:</p>
+          <input
+            type="text"
+            placeholder="Snapshot Name"
+            value={snapshotName}
+            onChange={(e) => setSnapshotName(e.target.value)}
+            className="snapshot-input"
+          />
+          <button onClick={handleSaveSnapshot} className="save-snapshot-button">
+            Save Snapshot
+          </button>
         </section>
       </main>
 

@@ -24,7 +24,7 @@ const Home = () => {
           financial services.
         </p>
         <div className="buttonContainer">
-          <Link to="/upload" className="buttonStyle">
+          <Link to="/instructions" className="buttonStyle">
             Upload Dataset
           </Link>
           <Link to="/snapshots" className="buttonStyle">
