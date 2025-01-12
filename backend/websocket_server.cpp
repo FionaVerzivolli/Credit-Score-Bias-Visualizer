@@ -8,6 +8,7 @@
 
 #define PORT 9001
 #define BUFFER_SIZE 1024
+#define MAX_PAYLOAD_LENGTH 65536 // Define a reasonable maximum payload length
 
 // Lightweight Base64 encoding
 std::string base64Encode(const unsigned char *data, size_t length)
@@ -225,108 +226,202 @@ std::string createHandshakeResponse(const std::string &request)
     return response;
 }
 
+// Function to send a WebSocket message to the client
+void sendMessage(int client_fd, const std::string &message)
+{
+    std::vector<unsigned char> frame;
+
+    // Set FIN bit and text frame opcode
+    frame.push_back(0x81);
+
+    // Determine payload length
+    size_t messageLength = message.size();
+    if (messageLength <= 125)
+    {
+        frame.push_back(static_cast<unsigned char>(messageLength));
+    }
+    else if (messageLength <= 65535)
+    {
+        frame.push_back(126);
+        frame.push_back((messageLength >> 8) & 0xFF);
+        frame.push_back(messageLength & 0xFF);
+    }
+    else
+    {
+        frame.push_back(127);
+        for (int i = 7; i >= 0; --i)
+        {
+            frame.push_back((messageLength >> (8 * i)) & 0xFF);
+        }
+    }
+
+    // Add the message payload
+    frame.insert(frame.end(), message.begin(), message.end());
+
+    // Send the constructed frame to the client
+    send(client_fd, frame.data(), frame.size(), 0);
+}
+
+// Function to parse incoming WebSocket frames and extract payload data
+std::string parseFrame(const unsigned char *buffer, size_t length)
+{
+    if (length < 2)
+    {
+        std::cerr << "Error: Frame is too short!" << std::endl;
+        return "";
+    }
+
+    bool fin = (buffer[0] & 0x80) != 0; // FIN bit
+    unsigned char opcode = buffer[0] & 0x0F;
+
+    if (opcode != 0x1) // Only handle text frames for now
+    {
+        std::cerr << "Error: Unsupported opcode!" << std::endl;
+        return "";
+    }
+
+    bool masked = (buffer[1] & 0x80) != 0; // Mask bit
+    size_t payloadLength = buffer[1] & 0x7F;
+    size_t offset = 2;
+
+    if (payloadLength == 126)
+    {
+        if (length < 4)
+        {
+            std::cerr << "Error: Frame too short for extended payload length!" << std::endl;
+            return "";
+        }
+        payloadLength = (buffer[2] << 8) | buffer[3];
+        offset += 2;
+    }
+    else if (payloadLength == 127)
+    {
+        if (length < 10)
+        {
+            std::cerr << "Error: Frame too short for extended payload length!" << std::endl;
+            return "";
+        }
+        payloadLength = 0;
+        for (int i = 0; i < 8; ++i)
+        {
+            payloadLength = (payloadLength << 8) | buffer[offset + i];
+        }
+        offset += 8;
+    }
+
+    if (masked)
+    {
+        if (length < offset + 4 + payloadLength)
+        {
+            std::cerr << "Error: Frame too short for masked payload!" << std::endl;
+            return "";
+        }
+
+        unsigned char maskingKey[4];
+        std::memcpy(maskingKey, buffer + offset, 4);
+        offset += 4;
+
+        std::string payload(payloadLength, '\0');
+        for (size_t i = 0; i < payloadLength; ++i)
+        {
+            payload[i] = buffer[offset + i] ^ maskingKey[i % 4];
+        }
+        return payload;
+    }
+    else
+    {
+        if (length < offset + payloadLength)
+        {
+            std::cerr << "Error: Frame too short for unmasked payload!" << std::endl;
+            return "";
+        }
+        return std::string(reinterpret_cast<const char *>(buffer + offset), payloadLength);
+    }
+}
+
+// Main function to handle WebSocket server communication
 int main()
 {
-    int server_fd, client_fd;
-    struct sockaddr_in address;
-    char buffer[BUFFER_SIZE] = {0};
-
-    // Create server socket
-    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (server_fd < 0)
     {
-        perror("Socket creation failed");
-        return -1;
+        std::cerr << "Error: Failed to create socket!" << std::endl;
+        return 1;
     }
 
-    std::cout << "Socket created successfully." << std::endl;
+    sockaddr_in server_addr{};
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(PORT);
 
-    // Configure server address
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
-
-    // Bind socket to the specified port
-    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0)
+    if (bind(server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
     {
-        perror("Bind failed");
+        std::cerr << "Error: Failed to bind socket!" << std::endl;
         close(server_fd);
-        return -1;
+        return 1;
     }
-    std::cout << "Socket bound to port " << PORT << "." << std::endl;
 
-    // Start listening for incoming connections
-    if (listen(server_fd, 3) < 0)
+    if (listen(server_fd, 5) < 0)
     {
-        perror("Listen failed");
+        std::cerr << "Error: Failed to listen on socket!" << std::endl;
         close(server_fd);
-        return -1;
+        return 1;
     }
-    std::cout << "Server listening on ws://localhost:" << PORT << std::endl;
+
+    std::cout << "WebSocket server started on port " << PORT << std::endl;
 
     while (true)
     {
-        socklen_t addrlen = sizeof(address);
-        if ((client_fd = accept(server_fd, (struct sockaddr *)&address, &addrlen)) < 0)
+        sockaddr_in client_addr{};
+        socklen_t client_len = sizeof(client_addr);
+        int client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_len);
+        if (client_fd < 0)
         {
-            perror("Accept failed");
+            std::cerr << "Error: Failed to accept client connection!" << std::endl;
             continue;
         }
 
-        std::cout << "Client connected!" << std::endl;
-
-        // Read WebSocket handshake request
-        int bytesRead = read(client_fd, buffer, BUFFER_SIZE);
+        char buffer[BUFFER_SIZE] = {0};
+        ssize_t bytesRead = recv(client_fd, buffer, BUFFER_SIZE, 0);
         if (bytesRead <= 0)
         {
-            std::cerr << "Error reading handshake or client disconnected immediately." << std::endl;
+            std::cerr << "Error: Failed to read handshake request!" << std::endl;
             close(client_fd);
             continue;
         }
 
-        std::cout << "Received handshake request:\n"
-                  << buffer << std::endl;
-
-        // Send WebSocket handshake response
         std::string handshakeResponse = createHandshakeResponse(buffer);
-        send(client_fd, handshakeResponse.c_str(), handshakeResponse.size(), 0);
-        std::cout << "Handshake response sent." << std::endl;
+        if (handshakeResponse.empty())
+        {
+            std::cerr << "Error: Invalid WebSocket handshake request!" << std::endl;
+            close(client_fd);
+            continue;
+        }
 
-        // Handle WebSocket messages
+        send(client_fd, handshakeResponse.c_str(), handshakeResponse.size(), 0);
+        std::cout << "Handshake completed with client!" << std::endl;
+
         while (true)
         {
-            memset(buffer, 0, BUFFER_SIZE);
-            bytesRead = read(client_fd, buffer, BUFFER_SIZE);
-
+            bytesRead = recv(client_fd, buffer, BUFFER_SIZE, 0);
             if (bytesRead <= 0)
             {
-                std::cout << "Client disconnected!" << std::endl;
-                close(client_fd);
+                std::cerr << "Error: Client disconnected or read error!" << std::endl;
                 break;
             }
 
-            // Decode WebSocket frames properly
-            uint8_t opcode = buffer[0] & 0x0F;
-            bool isFinalFrame = buffer[0] & 0x80;
+            std::string message = parseFrame(reinterpret_cast<unsigned char *>(buffer), bytesRead);
+            if (!message.empty())
+            {
+                std::cout << "Received: " << message << std::endl;
 
-            if (opcode == 0x8)
-            { // Close frame
-                std::cout << "Client sent a close frame." << std::endl;
-                close(client_fd);
-                break;
+                // Echo the received message back to the client
+                sendMessage(client_fd, message);
             }
-
-            // Assume the payload length is small (no extended length)
-            size_t payloadStart = 2; // Skip the first two bytes (opcode and payload length)
-            size_t payloadLength = buffer[1] & 0x7F;
-
-            std::string message(buffer + payloadStart, payloadLength);
-            std::cout << "Message received: " << message << std::endl;
-
-            // Respond to the client
-            std::string response = "Message received and processed!";
-            send(client_fd, response.c_str(), response.size(), 0);
-            std::cout << "Response sent to client." << std::endl;
         }
+
+        close(client_fd);
+        std::cout << "Client connection closed!" << std::endl;
     }
 
     close(server_fd);
