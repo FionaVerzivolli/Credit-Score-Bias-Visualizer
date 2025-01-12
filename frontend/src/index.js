@@ -12,7 +12,7 @@ root.render(
     domain="dev-6a6tdlv5emz3gcos.us.auth0.com"
     clientId="lx3xmDagK9OX9WBNGWSwrbiabZYPiLxg"
     authorizationParams={{
-      redirect_uri: "http://localhost:3000/home",
+      redirect_uri: "http://equalizer.wiki/home",
     }}
   >
     <App />

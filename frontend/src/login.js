@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 import "./css/LoginButton.css"; 
-
+import Logo from './magnifyingglass.png'
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
@@ -17,10 +17,13 @@ const LoginButton = () => {
           Rate, Demographic Parity, and Group Disparity, this project aims to
           create impactful, scalable tools to promote greater equity.
         </p>
+        <img src={Logo} style={{ width: '200px', height: 'auto' }} // Specify the size
+ alt="Logo" />;
       </div>
       <button className="login-button" onClick={() => loginWithRedirect()}>
         Log In / Sign Up
       </button>
+
     </div>
   );
 };

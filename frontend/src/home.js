@@ -10,7 +10,7 @@ const Home = () => {
     <div className="home-container3">
       <button
         className="static-buttons-container"
-        onClick={() => logout({ logoutParams: { returnTo: "http://localhost:3000" } })}
+        onClick={() => logout({ logoutParams: { returnTo: "http://equalizer.wiki" } })}
       >
         Log Out
       </button>
