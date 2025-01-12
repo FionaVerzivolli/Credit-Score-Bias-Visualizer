@@ -33,9 +33,6 @@ const Home = () => {
           <Link to="/snapshots" className="buttonStyle">
             View Snapshots
           </Link>
-          <Link to="/learnmore" className="buttonStyle">
-            Learn More
-          </Link>
         </div>
       </div>
     </div>

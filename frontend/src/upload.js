@@ -225,24 +225,21 @@ function Upload() {
       });
   };
   
-  
-
-
   return (
-    <div className="App">
+    <div className="App4">
       {/* Home and Log Out Buttons */}
       <div className="static-buttons-container">
-        <Link to="/home" className="button-link">
+        <Link to="/home" className="button-link2">
           Home
         </Link>
-        <Link to="/instructions" className="button-link">
+        <Link to="/instructions" className="button-link2">
           Instructions
         </Link>
         <button
           onClick={() =>
             logout({ logoutParams: { returnTo: window.location.origin } })
           }
-          className="button-link"
+          className="button-link2"
         >
           Log Out
         </button>
@@ -340,9 +337,6 @@ function Upload() {
     <div>Demographic Parity: {metrics.demographicParity || "N/A"}</div>
     <div>Group Disparity: {metrics.groupDisparity || "N/A"}</div>
     <div>Overall Grade: {overallGrade || "N/A"}</div>
-  </div>
-    </section>
-    
     <div className="chart-display">
     <ChartComponent key={chartKey} filtered_data={[
     metrics.falsePositiveRate || 0,
@@ -350,6 +344,10 @@ function Upload() {
     metrics.groupDisparity || 0,
   ]}/>
   </div>
+  </div>
+    </section>
+    
+  
   
   <section>
   <div className="save-snapshot">
@@ -367,9 +365,6 @@ function Upload() {
 </section>
 </main>
 
-<footer>
-  <p>&copy; 2025 Bias Visualizer Project</p>
-</footer>
 </div>
 );
 }

@@ -18,6 +18,7 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     text-align: center;
     display: flex;
+    font-size: 1.5rem;
     flex-direction: column; /* Stack elements vertically */
     justify-content: space-between; /* Push buttons to the bottom */
   }
@@ -79,7 +80,7 @@
   }
   
   .logout-button {
-    position: absolute;
+    position: fixed;
     top: 20px; /* Adjust to position it at the top-left corner */
     left: 20px;
     position: absolute;
@@ -96,12 +97,10 @@
   
   .logout-button:hover {
     background-color: #5c6067; /* Slightly lighter for hover */
-    transform: translateY(-2px);
   }
   
   .logout-button:active {
     background-color: #282c34; /* Darker color for active state */
-    transform: translateY(0);
   }
   /* Snapshots Section */
   .snapshots-section {
@@ -114,77 +113,6 @@
     padding: 20px;
   }
   
-  /* Snapshot Rectangle Styling */
-  .snapshot-rectangle {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: calc(33% - 20px); /* 3 rectangles per row, accounting for gap */
-    min-width: 250px; /* Minimum width for smaller screens */
-    text-align: left;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-  }
-  
-  .snapshot-rectangle:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .snapshot-title {
-    font-size: 1.5rem;
-    color: #282c34;
-    margin-bottom: 10px;
-  }
-  
-  .snapshot-rectangle p {
-    margin: 5px 0;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  /* Snapshots Scrollable Container */
-  .snapshots-scrollable {
-    max-height: 600px; /* Limit height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
-    display: grid; /* Use grid layout */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 20px; /* Space between items */
-    justify-items: center; /* Center items in their grid cells */
-  }
-  /* Snapshot Rectangle Styling */
-  .snapshot-rectangle {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: left;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-    width: 100%; /* Full width of grid cell */
-  }
-  
-  .snapshot-rectangle:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .snapshot-title {
-    font-size: 1.5rem;
-    color: #282c34;
-    margin-bottom: 10px;
-  }
-  
-  .snapshot-rectangle p {
-    margin: 5px 0;
-    font-size: 1rem;
-    color: #333;
-  }
   .intro-desc {
     display: flex;
     flex-direction: column;

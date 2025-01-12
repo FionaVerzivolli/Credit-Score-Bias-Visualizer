@@ -41,6 +41,7 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   text-align: center;
   display: flex;
+  font-size: 2rem;
   flex-direction: column; /* Stack elements vertically */
   justify-content: space-between; /* Push buttons to the bottom */
   height: 450px; /* Adjust height for consistent layout */
@@ -49,6 +50,7 @@
 .home-title {
   font-size: 3rem; /* Larger font size for the title */
   font-weight: bold;
+  max-width: 1200px;
   color: #343a40; /* Dark gray */
 }
 
@@ -56,6 +58,7 @@
   font-size: 1.2rem; /* Larger font size for description */
   color: #495057; /* Medium gray */
   line-height: 2;
+  max-width: 1000px;
   margin-bottom: 30px;
 }
 
@@ -70,11 +73,10 @@
 .buttonStyle {
   display: inline-block;
   text-decoration: none;
-  padding: 20px 40px; /* Increased padding for larger button size */
   background-color: #3c4047; /* Consistent dark button style */
   color: white;
   border-radius: 5px;
-  font-size: 1.5rem; /* Larger font size for button text */
+  font-size: 2rem; /* Larger font size for button text */
   font-weight: bold;
   text-align: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
