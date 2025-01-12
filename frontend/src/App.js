@@ -18,12 +18,15 @@ function App() {
                 <div className="hero-content animate-fade-in-delayed">
                   <h1 className="title">Bias Analysis in Credit Score</h1>
                   <p>Explore potential biases and evaluate fairness metrics.</p>
-                  <Link to="/login" className="scroll-down">
-                    Log In
-                  </Link>
-                  <Link to="/upload" className="scroll-down">
-                    Upload Data
-                  </Link>
+                  <div className="button-container">
+                    <Link to="/login" className="scroll-down">
+                      Log In
+                    </Link>
+                    <Link to="/signup" className="scroll-down">
+                      Sign Up
+                    </Link>
+                  </div>
+
                 </div>
               </div>
             }
