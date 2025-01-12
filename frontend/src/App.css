@@ -173,20 +173,22 @@ button:hover {
   background-color: #3c4047;
 }
 
-/* Metrics Display */
+.containers {
+  display: flex;
+  flex-direction: column;
+}
 .metrics-display {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-
 .chart-display {
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin-bottom: 20px;
-
 }
+
 /* Results Section */
 .results-summary {
   margin-top: 20px;
