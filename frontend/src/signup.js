@@ -5,6 +5,13 @@ import "./App.css";
 function Signup() {
   return (
     <div className="signup-container">
+      {/* Home Button */}
+      <div className="home-button">
+        <Link to="/" className="home-link">
+          Home
+        </Link>
+      </div>
+
       <div className="signup-box">
         <h2 className="signup-title">Create Your Account</h2>
         <p className="signup-subtitle">Sign up to explore bias metrics and insights.</p>
@@ -20,7 +27,12 @@ function Signup() {
           <button className="signup-button">Sign Up</button>
         </form>
         <div className="login-prompt">
-          <p>Already have an account? <Link to="/login" className="login-link">Log In</Link></p>
+          <p>
+            Already have an account?{" "}
+            <Link to="/login" className="login-link">
+              Log In
+            </Link>
+          </p>
         </div>
       </div>
     </div>
