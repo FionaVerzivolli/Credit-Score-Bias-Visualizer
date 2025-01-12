@@ -1,28 +1,57 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from bias import calculate_filtered_false_positive_rate, calculate_filtered_demographic_parity, calculate_group_disparity, assign_letter_grade
 
 app = Flask(__name__)
-CORS(app)  # Allow requests from the React frontend
+CORS(app)  # allow requests from React frontend
+
+def lowercase_data(data):
+    """convert all keys and values in a dictionary or list to lowercase."""
+    if isinstance(data, dict):
+        return {k.lower(): (v.lower() if isinstance(v, str) else v) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [lowercase_data(item) for item in data]
+    return data
 
 @app.route('/api/filter', methods=['POST'])
 def apply_filters():
-    data = request.json  # Get JSON data from the request body
-    filters = data.get("filters", {})
-    file_content = data.get("fileContent", {})
+    try:
+        data = request.json  # get JSON data from the request body
+        print("Incoming data:", data)  # Debug the data
 
-    # Apply filters to the JSON data (example logic)
-    filtered_data = [
-        record for record in file_content
-        if (not filters.get("gender") or record.get("gender") == filters["gender"]) and
-           (not filters.get("continent") or record.get("continent") == filters["continent"]) and
-           (not filters.get("ageGroup") or record.get("ageGroup") == filters["ageGroup"]) and
-           (not filters.get("race") or record.get("race") == filters["race"])
-    ]
-    print(filtered_data)
-    return jsonify({
-        "message": "Filters applied successfully!",
-        "filteredData": filtered_data
-    })
+        # convert filters and dataset to lowercase for consistency
+        filters = lowercase_data(data.get("filters", {}))
+        dataset = lowercase_data(data.get("fileContent", []))
+        # print("Filters:", filters)
+        # print("Data:", dataset)
+
+        # use methods in bias.py to process the dataset
+        false_positive_rate = calculate_filtered_false_positive_rate(dataset, filters)
+        demographic_parity = calculate_filtered_demographic_parity(dataset, filters)
+        group_disparity = calculate_group_disparity(dataset, filters)
+        overall_grade = assign_letter_grade(false_positive_rate, group_disparity)
+
+        # create snapshot to be saved in the database
+        snapshot = {
+            "filtersApplied": filters,
+            "metrics": {
+                "falsePositiveRate": false_positive_rate,
+                "demographicParity": demographic_parity,
+                "groupDisparity": group_disparity
+            },
+            "overallGrade": overall_grade
+        }
+        
+        print(snapshot)
+
+        return jsonify({
+            "message": "Filters applied successfully!",
+            "snapshot": snapshot
+        })
+    except Exception as e:
+        print("Error:", str(e))
+        return jsonify({"message": "An error occurred while applying filters"}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
