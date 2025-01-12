@@ -84,10 +84,6 @@ function Instructions() {
           Upload Dataset
         </Link>
       </main>
-
-      <footer>
-        <p>&copy; 2025 Bias Visualizer Project</p>
-      </footer>
     </div>
   );
 }

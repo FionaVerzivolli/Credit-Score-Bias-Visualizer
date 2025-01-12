@@ -42,7 +42,7 @@ const Snapshots = () => {
   ];
 
   return (
-    <div className="home-container">
+    <div className="home-container-2">
       <div className="static-buttons-container">
         <Link to="/home" className="button-link">
           Home

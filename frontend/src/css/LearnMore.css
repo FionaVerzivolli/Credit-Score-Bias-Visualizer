@@ -1,17 +1,17 @@
 /* General Home Page Styling */
-.home-container {
+.learn-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 250vh;
     min-width: 80vw;
 
     background-color: #f8f9fa; /* Light background for contrast */
-    padding: 20px;
     font-family: Arial, sans-serif;
   }
   .intro-section {
     max-width: 1200px; /* Increased width for a wider container */
+    max-height: 2000px;
     background-color: #ffffff;
     padding: 40px;
     border-radius: 10px;
@@ -23,14 +23,14 @@
   }
   
   
-  .home-title {
+  .learn-title {
     font-size: 2.5rem;
     font-weight: bold;
     color: #343a40; /* Dark gray */
     margin-bottom: 20px;
   }
   
-  .home-text {
+  .learn-text {
     font-size: 1.2rem;
     color: #495057; /* Medium gray */
     line-height: 1.6;
@@ -76,7 +76,6 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin-top: auto; /* Ensures buttons are at the bottom of the container */
   }
   
   .logout-button {
@@ -191,7 +190,6 @@
     flex-direction: column;
     justify-content: flex-start; /* Align items to the top */
     align-items: center; /* Center horizontally */
-    margin-top: 0; /* Remove any margin */
     padding-top: 20px; /* Add some padding at the top */
     text-align: center; /* Center the text inside the div */
     width: 100%; /* Ensure it spans the full width */

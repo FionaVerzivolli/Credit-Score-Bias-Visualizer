@@ -26,10 +26,10 @@ function App() {
               element={
                 <div className="hero">
                   <div className="hero-content animate-fade-in-delayed">
-                    <h1 className="title">Bias Analysis in Credit Score</h1>
-                    <p>Explore potential biases and evaluate fairness metrics.</p>
-                    <div className="button-container">
-                      <Link to="/login" className="scroll-down">
+                    <h1 className="title">Bias Analysis in Credit Score and its Adversities</h1>
+                    <p>Explore potential biases and evaluate fairness metrics. View how certain demographics are heavily effected by bias in our community.</p>
+                    <div className="login-button-container">
+                      <Link to="/login" className="scroll-down-intro">
                         Get Started
                       </Link>
                     </div>
@@ -46,9 +46,11 @@ function App() {
             <Route path="/learnmore" element={<LearnMore />} />
 
           </Routes>
+          
         </div>
       </Router>
     </MetricsProvider>
+    
   );
 }
 
