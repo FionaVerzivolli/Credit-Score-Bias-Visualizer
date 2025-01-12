@@ -6,6 +6,7 @@ import Login from "./login";
 import Upload from "./upload";
 import Home from "./home";
 import Snapshots from "./snapshots";
+import LearnMore from "./learnmore";
 import "./App.css";
 import Instructions from "./instructions";
 
@@ -41,7 +42,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/snapshots" element={<Snapshots />} />
-            <Route path="/instructions" element={<Instructions/>} />
+            <Route path="/instructions" element={<Instructions />} />
+            <Route path="/learnmore" element={<LearnMore />} />
 
           </Routes>
         </div>

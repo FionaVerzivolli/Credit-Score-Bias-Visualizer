@@ -11,6 +11,7 @@ function Upload() {
   const { user } = useAuth0();
   const [file, setFile] = useState(null);
   const [webSocket, setWebSocket] = useState(null);
+  const [chartKey, setChartKey] = useState(0); // Unique key for ChartComponent
   const [isWebSocketReady, setIsWebSocketReady] = useState(false);
   const [filters, setFilters] = useState({
     gender: "",
@@ -195,6 +196,7 @@ const handleSaveSnapshot = () => {
           groupDisparity: snapshot.metrics.groupDisparity,
         });
         setOverallGrade(snapshot.overallGrade);
+        setChartKey((prevKey) => prevKey + 1); // Increment chartKey to force ChartComponent re-render
         alert("Filters applied successfully!");
       })
       .catch((error) => {
@@ -230,7 +232,7 @@ const handleSaveSnapshot = () => {
         {/* Upload Section */}
 
         <section className="data-upload">
-          <h2>Upload Dataset in JSON</h2>
+          <h2>Upload Dataset in JSON Format</h2>
           <input type="file" accept=".json" onChange={handleFileChange} />
         </section>
 
@@ -319,7 +321,17 @@ const handleSaveSnapshot = () => {
     <div>Group Disparity: {metrics.groupDisparity || "N/A"}</div>
     <div>Overall Grade: {overallGrade || "N/A"}</div>
   </div>
-
+    </section>
+    
+    <div className="chart-display">
+    <ChartComponent key={chartKey} filtered_data={[
+    metrics.falsePositiveRate || 0,
+    metrics.demographicParity || 0,
+    metrics.groupDisparity || 0,
+  ]}/>
+  </div>
+  
+  <section>
   {/* Save Snapshot Section */}
   <div className="save-snapshot">
     <input
@@ -332,16 +344,9 @@ const handleSaveSnapshot = () => {
     <button onClick={handleSaveSnapshot} className="snapshot-button">
       Save Snapshot
     </button>
-  </div>
+    </div>
 </section>
-
 </main>
-
-{/* Chart Section */}
-<section className="chart-section">
-  <h3>Visualized Metrics</h3>
-  <ChartComponent metrics={metrics} />
-</section>
 
 <footer>
   <p>&copy; 2025 Bias Visualizer Project</p>
