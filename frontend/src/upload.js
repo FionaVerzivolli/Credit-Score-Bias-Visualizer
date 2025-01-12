@@ -66,7 +66,7 @@ function Upload() {
     };
     console.log(snapshot);
     // Make the POST request to the save_snapshot_api
-    fetch("http://127.0.0.1:5000/api/save_snapshot", {
+    fetch("https://andrewsasmito05.pythonanywhere.com/save_snapshot", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -198,7 +198,7 @@ function Upload() {
       userId: user?.sub, // Include user.sub in the payload
     };
   
-    fetch("http://127.0.0.1:5000/api/filter", {
+    fetch("https://andrewsasmito05.pythonanywhere.com/api/filter", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
