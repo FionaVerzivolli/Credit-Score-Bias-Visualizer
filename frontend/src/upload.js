@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
 import { getWebSocket } from "./utils/websocket";
+import ChartComponent from "./ChartComponent"; // Import ChartComponent
+
 
 function Upload() {
   const [file, setFile] = useState(null);
@@ -334,13 +336,19 @@ function Upload() {
           <h2>Analysis Results</h2>
           <h3>Overall Grade: {overallGrade || "N/A"}</h3>
         </section>
-      </main>
+     </main>
 
-      <footer>
-        <p>&copy; 2025 Bias Visualizer Project</p>
-      </footer>
-    </div>
-  );
+{/* Chart Section */}
+<section className="chart-section">
+  <h3>Visualized Metrics</h3>
+  <ChartComponent metrics={metrics} />
+</section>
+
+<footer>
+  <p>&copy; 2025 Bias Visualizer Project</p>
+</footer>
+</div>
+);
 }
 
 export default Upload;
