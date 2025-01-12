@@ -73,6 +73,36 @@ def apply_filters():
         print("Error:", str(e))
         return jsonify({"message": "An error occurred while applying filters"}), 500
 
+
+@app.route('/api/get_user_data', methods=['POST'])
+def get_user_data_api():
+    try:
+        data = request.json  # Get JSON data from the request body
+        user_id = data.get("userId", None)
+        
+        if not user_id:
+            return jsonify({"message": "User ID is missing from the request"}), 400
+        
+        print(f"Retrieving data for user ID: {user_id}")
+        
+        # Call the get_user_data function to fetch data for the user
+        user_data = get_user_data(user_id)
+        
+        if not user_data:
+            return jsonify({
+                "message": f"No data found for user ID: {user_id}",
+                "data": None
+            }), 404
+        
+        return jsonify({
+            "message": "User data retrieved successfully!",
+            "data": user_data
+        })
+    except Exception as e:
+        print(f"Error in get_user_data_api: {e}")
+        return jsonify({"message": "An error occurred while retrieving user data"}), 500
+
+
 def get_user_data(user_id):
     try:
         # Define the root path to search for user-related data
