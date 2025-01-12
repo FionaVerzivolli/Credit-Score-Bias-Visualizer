@@ -157,6 +157,17 @@ function Upload() {
         })
         .then((data) => {
           console.log("Filtered data from backend:", data);
+  
+          // Extract metrics and overall grade from the response
+          const { snapshot } = data;
+  
+          setMetrics({
+            falsePositiveRate: snapshot.metrics.falsePositiveRate,
+            demographicParity: snapshot.metrics.demographicParity,
+            groupDisparity: snapshot.metrics.groupDisparity,
+          });
+          setOverallGrade(snapshot.overallGrade);
+  
           alert("Filters applied successfully!");
         })
         .catch((error) => {
@@ -172,6 +183,7 @@ function Upload() {
   
     reader.readAsText(file); // Read the file content
   };
+  
   
 
   return (
