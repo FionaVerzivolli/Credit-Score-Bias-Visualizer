@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { connectWebSocket } from "./utils/websocket"; // Import the connect function
 import Login from "./login";
 import Upload from "./upload";
 import Home from "./home"
@@ -7,11 +8,15 @@ import "./App.css";
 import Snapshots from "./snapshots";
 
 function App() {
+  useEffect(() => {
+    // Initialize WebSocket connection
+    connectWebSocket("ws://localhost:9001");
+  }, []);
+
   return (
     <Router>
       <div className="App">
         <Routes>
-          {/* Home Route */}
           <Route
             path="/"
             element={
