@@ -2,18 +2,18 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-def get_credentials():
-    # Fetch the service account key JSON file contents
-    cred = credentials.Certificate('secret key.json')
+# Initialize Firebase app only once
+def initialize_firebase():
+    if not firebase_admin._apps:  # Check if Firebase has already been initialized
+        cred = credentials.Certificate('secret key.json')
+        firebase_admin.initialize_app(cred, {
+            'databaseURL': "https://deltahacks-1334c-default-rtdb.firebaseio.com/"
+        })
 
-    # Initialize the app with a service account, granting admin privileges
-    firebase_admin.initialize_app(cred, {
-        'databaseURL': "https://deltahacks-1334c-default-rtdb.firebaseio.com/"
-    })
 
 # Function to retrieve all references containing the user.sub
 def get_data_with_user_sub(reference_path, user_sub):
-    get_credentials()
+    initialize_firebase()  # Ensure Firebase is initialized
     try:
         ref = db.reference(reference_path)
         data = ref.get()
@@ -49,7 +49,7 @@ def get_data_with_user_sub(reference_path, user_sub):
 
 # Function to save data to a given reference
 def save_data(reference_path, data):
-    get_credentials()
+    initialize_firebase()  # Ensure Firebase is initialized
     try:
         ref = db.reference(reference_path)
         ref.set(data)
@@ -60,13 +60,14 @@ def save_data(reference_path, data):
 
 # Function to delete data at a given reference
 def delete_data(reference_path):
-    get_credentials()
+    initialize_firebase()  # Ensure Firebase is initialized
     try:
         ref = db.reference(reference_path)
         ref.delete()
         print(f"Data deleted successfully from {reference_path}")
     except Exception as e:
         print(f"Error deleting data from {reference_path}: {e}")
+
 
 # Example usage
 if __name__ == "__main__":
@@ -81,10 +82,10 @@ if __name__ == "__main__":
     save_data(test_reference, sample_data)
 
     # Retrieve and print data
-    data = get_data(test_reference)
+    data = get_data_with_user_sub("example", "user1")
     print("Retrieved data:", data)
 
     # Delete data
     delete_data(test_reference)
-    deleted_data = get_data(test_reference)
+    deleted_data = get_data_with_user_sub("example", "user1")
     print("Data after deletion:", deleted_data)
