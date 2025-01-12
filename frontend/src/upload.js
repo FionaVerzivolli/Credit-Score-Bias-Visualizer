@@ -1,8 +1,14 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "./App.css";
 
 function Upload() {
   const [file, setFile] = useState(null);
-  const [filter, setFilter] = useState(""); // State to manage the selected filter
+  const [filters, setFilters] = useState({
+    gender: "",
+    continent: "",
+    ageGroup: "",
+  }); // State to manage multiple filters
   const [metrics, setMetrics] = useState({
     falsePositiveRate: null,
     demographicParity: null,
@@ -17,8 +23,11 @@ function Upload() {
   const handleUpload = () => {
     if (file) {
       console.log("File uploaded:", file);
-      // Simulated metrics update
-      setMetrics({ falsePositiveRate: 0.25, demographicParity: 0.85, groupDisparity: 0.9 });
+      setMetrics({
+        falsePositiveRate: 0.25,
+        demographicParity: 0.85,
+        groupDisparity: 0.9,
+      });
       setOverallGrade("B");
     } else {
       alert("Please upload a file.");
@@ -26,26 +35,77 @@ function Upload() {
   };
 
   const handleFilterChange = (e) => {
-    setFilter(e.target.value);
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
   };
 
   const handleFilterClick = () => {
-    if (!filter) {
-      alert("Please select an attribute to filter.");
+    const { gender, continent, ageGroup } = filters;
+    if (!gender && !continent && !ageGroup) {
+      alert("Please select at least one filter option.");
     } else {
-      console.log(`Filtering dataset by ${filter}`);
-      // Add logic to filter dataset here
+      console.log(`Filtering dataset with filters:`, filters);
+      // Add filtering logic here
     }
   };
 
   return (
     <div className="App">
+      {/* Home Button */}
+      <div className="home-button">
+        <Link to="/" className="home-link">
+          Home
+        </Link>
+      </div>
+
       <main id="main-content">
-        <section className="data-instructions">
-          <h2>Dataset Requirements</h2>
-          <p>Please ensure your dataset has the following attributes:</p>
-          {/* Existing table */}
-        </section>
+       {/* Dataset Requirement Section*/}
+       <section className="data-instructions">
+            <h2>Dataset Requirements</h2>
+            <p>Please ensure your dataset has the following attributes:</p>
+            <table className="attribute-table">
+              <thead>
+                <tr>
+                  <th>user_id</th>
+                  <th>age</th>
+                  <th>race</th>
+                  <th>continent</th>
+                  <th>gender</th>
+                  <th>economic_situation</th>
+                  <th>credit_score</th>
+                  <th>defaulted</th>
+                </tr>
+              </thead>
+              <thead>
+                <tr>
+                  <th>int</th>
+                  <th>int</th>
+                  <th>string</th>
+                  <th>string</th>
+                  <th>string</th>
+                  <th>double</th>
+                  <th>int</th>
+                  <th>bool</th>
+                </tr>
+              </thead>
+            </table>
+          </section>
+          <section className="data-instructions">
+        {/* Dataset Instruction Section*/}
+        <h2>Dataset Instructions</h2>
+        <p>Please ensure your dataset follows these guidelines:</p>
+        <ul className="instructions-list">
+          <li>Race should be one of the following: <strong>"white", "black", "asian", "hispanic", or "other"</strong>.</li>
+          <li>Gender should be <strong>"male", "female", or "other"</strong>.</li>
+          <li>Economic situation should be a number between <strong>1.0 and 10.0</strong>.</li>
+          <li>Credit score should be an integer between <strong>300 and 850</strong>.</li>
+          <li>Defaulted should be <strong>true</strong> or <strong>false</strong>.</li>
+          <li>Continent should be <strong>"north america", "south america", "africa", "europe", "asia", or "oceania"</strong>.</li>
+        </ul>
+      </section>
         <section className="data-upload">
           <h2>Upload Dataset</h2>
           <p>Upload your dataset in JSON format to analyze bias.</p>
@@ -58,27 +118,77 @@ function Upload() {
           <button onClick={handleUpload}>Upload</button>
         </section>
 
-        {/* Dropdown Filter Section */}
+        {/* Multi-Filter Section */}
         <section className="filter-section">
           <h2>Filter Dataset</h2>
-          <p>Select an attribute to filter the dataset:</p>
-          <label htmlFor="attribute-filter">Filter By Attribute:</label>
+          <p>Select attributes to filter the dataset:</p>
+        {/* Race Filter */}
+        <label htmlFor="race-filter">Filter by Race:</label>
+              <select
+                id="race-filter"
+                name="race"
+                value={filters.race}
+                onChange={handleFilterChange}
+                aria-label="Filter by continent"
+              >
+                <option value="">-- Select Continent --</option>
+                <option value="black">White</option>
+                <option value="white">Black</option>
+                <option value="asian">Asian</option>
+                <option value="hispanic">Hispanic</option>
+                <option value="other">Other</option>
+              </select>
+          {/* Gender Filter */}
+          <label htmlFor="gender-filter">Filter by Gender:</label>
           <select
-            id="attribute-filter"
-            value={filter}
+            id="gender-filter"
+            name="gender"
+            value={filters.gender}
             onChange={handleFilterChange}
-            aria-label="Select attribute to filter"
+            aria-label="Filter by gender"
           >
-            <option value="">-- Select Attribute --</option>
-            <option value="race">Race</option>
-            <option value="gender">Gender</option>
-            <option value="age">Age</option>
-            <option value="continent">Continent</option>
+            <option value="">-- Select Gender --</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select>
 
-          {/* Filter Button */}
+          {/* Continent Filter */}
+          <label htmlFor="continent-filter">Filter by Continent:</label>
+          <select
+            id="continent-filter"
+            name="continent"
+            value={filters.continent}
+            onChange={handleFilterChange}
+            aria-label="Filter by continent"
+          >
+            <option value="">-- Select Continent --</option>
+            <option value="asia">Asia</option>
+            <option value="europe">Europe</option>
+            <option value="north-america">North America</option>
+            <option value="south-america">South America</option>
+            <option value="africa">Africa</option>
+            <option value="oceania">Oceania</option>
+          </select>
+
+          {/* Age Group Filter */}
+          <label htmlFor="age-filter">Filter by Age Group:</label>
+          <select
+            id="age-filter"
+            name="ageGroup"
+            value={filters.ageGroup}
+            onChange={handleFilterChange}
+            aria-label="Filter by age group"
+          >
+            <option value="">-- Select Age Group --</option>
+            <option value="child">Child</option>
+            <option value="teen">Teen</option>
+            <option value="adult">Adult</option>
+            <option value="senior">Senior</option>
+          </select>
+
+          {/* Apply Filters Button */}
           <button onClick={handleFilterClick} className="filter-button">
-            Filter
+            Apply Filters
           </button>
         </section>
 
@@ -99,6 +209,7 @@ function Upload() {
             </div>
           </div>
         </section>
+
         <section className="results">
           <h2>Analysis Results</h2>
           <div className="results-summary">
