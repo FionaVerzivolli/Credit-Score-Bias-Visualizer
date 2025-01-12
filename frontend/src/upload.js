@@ -118,79 +118,88 @@ function Upload() {
           <button onClick={handleUpload}>Upload</button>
         </section>
 
-        {/* Multi-Filter Section */}
         <section className="filter-section">
-          <h2>Filter Dataset</h2>
-          <p>Select attributes to filter the dataset:</p>
-        {/* Race Filter */}
-        <label htmlFor="race-filter">Filter by Race:</label>
-              <select
-                id="race-filter"
-                name="race"
-                value={filters.race}
-                onChange={handleFilterChange}
-                aria-label="Filter by continent"
-              >
-                <option value="">-- Select Continent --</option>
-                <option value="black">White</option>
-                <option value="white">Black</option>
-                <option value="asian">Asian</option>
-                <option value="hispanic">Hispanic</option>
-                <option value="other">Other</option>
-              </select>
-          {/* Gender Filter */}
-          <label htmlFor="gender-filter">Filter by Gender:</label>
-          <select
-            id="gender-filter"
-            name="gender"
-            value={filters.gender}
-            onChange={handleFilterChange}
-            aria-label="Filter by gender"
-          >
-            <option value="">-- Select Gender --</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+  <h2>Filter Dataset</h2>
+  <p>Select attributes to filter the dataset:</p>
 
-          {/* Continent Filter */}
-          <label htmlFor="continent-filter">Filter by Continent:</label>
-          <select
-            id="continent-filter"
-            name="continent"
-            value={filters.continent}
-            onChange={handleFilterChange}
-            aria-label="Filter by continent"
-          >
-            <option value="">-- Select Continent --</option>
-            <option value="asia">Asia</option>
-            <option value="europe">Europe</option>
-            <option value="north-america">North America</option>
-            <option value="south-america">South America</option>
-            <option value="africa">Africa</option>
-            <option value="oceania">Oceania</option>
-          </select>
+  {/* Grid Layout for Filters */}
+  <div className="filter-grid">
+    {/* Race Filter */}
+    <div>
+      <select
+        id="race-filter"
+        name="race"
+        value={filters.race}
+        onChange={handleFilterChange}
+        aria-label="Filter by race"
+      >
+        <option value="">-- Race --</option>
+        <option value="white">White</option>
+        <option value="black">Black</option>
+        <option value="asian">Asian</option>
+        <option value="hispanic">Hispanic</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
 
-          {/* Age Group Filter */}
-          <label htmlFor="age-filter">Filter by Age Group:</label>
-          <select
-            id="age-filter"
-            name="ageGroup"
-            value={filters.ageGroup}
-            onChange={handleFilterChange}
-            aria-label="Filter by age group"
-          >
-            <option value="">-- Select Age Group --</option>
-            <option value="child">Child</option>
-            <option value="teen">Teen</option>
-            <option value="adult">Adult</option>
-            <option value="senior">Senior</option>
-          </select>
+    {/* Gender Filter */}
+    <div>
+      <select
+        id="gender-filter"
+        name="gender"
+        value={filters.gender}
+        onChange={handleFilterChange}
+        aria-label="Filter by gender"
+      >
+        <option value="">-- Gender --</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
 
-          {/* Apply Filters Button */}
-          <button onClick={handleFilterClick} className="filter-button">
-            Apply Filters
-          </button>
-        </section>
+    {/* Continent Filter */}
+    <div>
+      <select
+        id="continent-filter"
+        name="continent"
+        value={filters.continent}
+        onChange={handleFilterChange}
+        aria-label="Filter by continent"
+      >
+        <option value="">-- Continent --</option>
+        <option value="asia">Asia</option>
+        <option value="europe">Europe</option>
+        <option value="north-america">North America</option>
+        <option value="south-america">South America</option>
+        <option value="africa">Africa</option>
+        <option value="oceania">Oceania</option>
+      </select>
+    </div>
+
+    {/* Age Group Filter */}
+    <div>
+      <select
+        id="age-filter"
+        name="ageGroup"
+        value={filters.ageGroup}
+        onChange={handleFilterChange}
+        aria-label="Filter by age group"
+      >
+        <option value="">-- Age --</option>
+        <option value="child">Child</option>
+        <option value="teen">Teen</option>
+        <option value="adult">Adult</option>
+        <option value="senior">Senior</option>
+      </select>
+    </div>
+  </div>
+
+  {/* Apply Filters Button */}
+  <button onClick={handleFilterClick} className="filter-button">
+    Apply Filters
+  </button>
+</section>
+
 
         <section className="metrics">
           <h2>Bias Metrics</h2>
