@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { connectWebSocket } from "./utils/websocket"; // Import the connect function
 import Login from "./login";
 import Upload from "./upload";
 import Signup from "./signup";
 import "./App.css";
 
 function App() {
+  useEffect(() => {
+    // Initialize WebSocket connection
+    connectWebSocket("ws://localhost:9001");
+  }, []);
+
   return (
     <Router>
       <div className="App">
         <Routes>
-          {/* Home Route */}
           <Route
             path="/"
             element={
@@ -28,7 +33,6 @@ function App() {
               </div>
             }
           />
-          {/* Login and Upload Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/signup" element={<Signup />} />
