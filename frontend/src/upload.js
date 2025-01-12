@@ -332,11 +332,13 @@ function Upload() {
           </section>
           <section className="metrics">
   <h2>Bias Metrics</h2>
+  <div className="containers">
   <div className="metrics-display">
     <div>False Positive Rate: {metrics.falsePositiveRate || "N/A"}</div>
     <div>Demographic Parity: {metrics.demographicParity || "N/A"}</div>
     <div>Group Disparity: {metrics.groupDisparity || "N/A"}</div>
     <div>Overall Grade: {overallGrade || "N/A"}</div>
+      </div>
     <div className="chart-display">
     <ChartComponent key={chartKey} filtered_data={[
     metrics.falsePositiveRate || 0,
