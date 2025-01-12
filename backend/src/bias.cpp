@@ -1,43 +1,57 @@
+#include <iostream>
 #include <vector>
 #include <string>
 #include "user.h"
 #include "filters.h"
 
-// calculate false positive rate (FPR) with filters
 double calculateFilteredFalsePositiveRate(const std::vector<User>& users, const Filter& filters) {
     int falsePositives = 0, trueNegatives = 0;
 
     for (const auto& user : users) {
         if (userMatchesFilters(user, filters)) {
             if (user.credit_score < 600 && !user.defaulted) {
+                std::cout << "False Positive: ID=" << user.user_id << std::endl;
                 falsePositives++;
             }
             if (user.credit_score >= 600 && !user.defaulted) {
+                std::cout << "True Negative: ID=" << user.user_id << std::endl;
                 trueNegatives++;
             }
         }
     }
+
+    std::cout << "False Positives: " << falsePositives
+              << ", True Negatives: " << trueNegatives << std::endl;
 
     return (falsePositives + trueNegatives) > 0 
         ? static_cast<double>(falsePositives) / (falsePositives + trueNegatives) 
         : 0.0;
 }
 
-// calculate demographic parity with filters
+
+
+
 double calculateFilteredDemographicParity(const std::vector<User>& users, const Filter& filters) {
     int approved = 0, total = 0;
 
     for (const auto& user : users) {
         if (userMatchesFilters(user, filters)) {
-            if (user.credit_score >= 700) { 
+            std::cout << "Matched User: ID=" << user.user_id
+                      << ", Credit Score=" << user.credit_score << std::endl;
+
+            if (user.credit_score >= 700) {
                 approved++;
             }
             total++;
         }
     }
 
+    std::cout << "Approved: " << approved
+              << ", Total: " << total << std::endl;
+
     return total > 0 ? static_cast<double>(approved) / total : 0.0;
 }
+
 
 // calculate group disparity between two filtered groups
 double calculateGroupDisparity(const std::vector<User>& users, const Filter& group1Filters, const Filter& group2Filters) {
