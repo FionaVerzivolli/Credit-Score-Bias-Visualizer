@@ -59,7 +59,7 @@ const Snapshots = () => {
       <div className="intro-desc">
         <h1 className="home-title">My Snapshots</h1>
         <p className="snapshot-text">
-  Your saved snapshots are shown to the right. Feel free to delete a snapshot or scroll through them to evaluate your company's <strong>progress</strong>. You can create a snapshot in the <strong>upload page</strong> and add custom titles. Each snapshot has a <strong>date</strong>, <strong>grade</strong>, <strong>false positive rate</strong>, <strong>demographic parity</strong>, and <strong>group disparity</strong>.
+  Your saved snapshots are shown to the right. Feel free to scroll through them to evaluate your company's <strong>progress</strong>. You can create a snapshot in the <strong>upload page</strong> and add custom titles. Each snapshot has a <strong>date</strong>, <strong>grade</strong>, <strong>false positive rate</strong>, <strong>demographic parity</strong>, and <strong>group disparity</strong>.
 </p>
       </div>
       <div className="snapshots-scrollable">

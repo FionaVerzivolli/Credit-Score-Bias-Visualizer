@@ -256,33 +256,31 @@ const handleSaveSnapshot = () => {
             Apply Filters
           </button>
           </section>
-        {/* Metrics Section */}
-        <section className="metrics">
-          <h2>Bias Metrics</h2>
-          <div className="metrics-display">
-            <div>False Positive Rate: {metrics.falsePositiveRate || "N/A"}</div>
-            <div>Demographic Parity: {metrics.demographicParity || "N/A"}</div>
-            <div>Group Disparity: {metrics.groupDisparity || "N/A"}</div>
-            <div>Overall Grade: {metrics.overallGrade || "N/A"}</div>
+          <section className="metrics">
+  <h2>Bias Metrics</h2>
+  <div className="metrics-display">
+    <div>False Positive Rate: {metrics.falsePositiveRate || "N/A"}</div>
+    <div>Demographic Parity: {metrics.demographicParity || "N/A"}</div>
+    <div>Group Disparity: {metrics.groupDisparity || "N/A"}</div>
+    <div>Overall Grade: {overallGrade || "N/A"}</div>
+  </div>
 
-          </div>
-        </section>
-        {/* Save Snapshot Section */}
-        <section className="save-snapshot">
-          <h2>Save Snapshot</h2>
-          <p>Provide a name for your snapshot and save it:</p>
-          <input
-            type="text"
-            placeholder="Snapshot Name"
-            value={snapshotName}
-            onChange={(e) => setSnapshotName(e.target.value)}
-            className="snapshot-input"
-          />
-          <button onClick={handleSaveSnapshot} className="save-snapshot-button">
-            Save Snapshot
-          </button>
-        </section>
-     </main>
+  {/* Save Snapshot Section */}
+  <div className="save-snapshot">
+    <input
+      type="text"
+      placeholder="Snapshot Name"
+      value={snapshotName}
+      onChange={(e) => setSnapshotName(e.target.value)}
+      className="snapshot-input"
+    />
+    <button onClick={handleSaveSnapshot} className="snapshot-button">
+      Save Snapshot
+    </button>
+  </div>
+</section>
+
+</main>
 
 {/* Chart Section */}
 <section className="chart-section">
