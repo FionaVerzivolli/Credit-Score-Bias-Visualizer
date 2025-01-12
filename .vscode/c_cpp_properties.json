@@ -1,17 +1,23 @@
 {
   "configurations": [
     {
-      "name": "macos-clang-arm64",
+      "name": "Mac",
       "includePath": [
-        "${workspaceFolder}/**"
+        "${workspaceFolder}/src",                      // Your source directory
+        "${workspaceFolder}/backend/tests",            // Your tests directory
+        "/opt/homebrew/Cellar/check/0.15.2/include",   // Path to Check headers
+        "/usr/local/include",                          // General include path
+        "/usr/include"                                 // System headers
       ],
-      "compilerPath": "/usr/bin/clang",
-      "cStandard": "${default}",
-      "cppStandard": "${default}",
-      "intelliSenseMode": "macos-clang-arm64",
-      "compilerArgs": [
-        ""
-      ]
+      "defines": [],
+      "macFrameworkPath": [
+        "/System/Library/Frameworks",
+        "/Library/Frameworks"
+      ],
+      "compilerPath": "/usr/bin/clang++",              // Update this to your compiler
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "macos-clang-x64"
     }
   ],
   "version": 4
