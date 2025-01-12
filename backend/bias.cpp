@@ -1,115 +1,113 @@
-#include <iostream>
-#include <fstream>
 #include <vector>
-#include <map>
 #include <string>
-#include <algorithm>
 #include "user.h"
 
-// function to calculate the false positive rate of a demographic
-// will need to do this each time per each demographic and then visualize it in UI
-double calculateFalsePositiveRate(const std::vector<User>& users, const std::string& race) {
+// calculate false positive rate (fpr) for a specific group and criterion
+double calculateFalsePositiveRate(const std::vector<User>& users, const std::string& group, const std::string& criterion) {
     int falsePositives = 0, trueNegatives = 0;
 
-    for (const auto& u : users) {
-        if (u.race == race) { // focus only on given race per calculation
-            if (u.credit_score < 600 && !u.defaulted) {
-                // flagged as risky but did not default = false positive
-                falsePositives++;
+    for (const auto& user : users) {
+        if ((criterion == "race" && user.race == group) ||
+            (criterion == "gender" && user.gender == group) ||
+            (criterion == "continent" && user.continent == group)) {
+            if (user.credit_score < 600 && !user.defaulted) {
+                falsePositives++; // flagged as risky but did not default
             }
-            if (u.credit_score >= 600 && !u.defaulted) {
-                // not flagged as risky and did not default = true negative
-                trueNegatives++;
+            if (user.credit_score >= 600 && !user.defaulted) {
+                trueNegatives++; // not flagged as risky and did not default
             }
         }
     }
 
-    // case for division by zero
-    if (falsePositives + trueNegatives == 0) return 0.0;
-
-    // calculate rate
-    return static_cast<double>(falsePositives) / (falsePositives + trueNegatives);
+    return (falsePositives + trueNegatives) > 0 
+        ? static_cast<double>(falsePositives) / (falsePositives + trueNegatives) 
+        : 0.0; // avoid division by zero
 }
 
-
-double calculateDemographicParity(const std::vector<User> &users, const std::string &race) {
+// calculate demographic parity for a given race
+double calculateDemographicParity(const std::vector<User>& users, const std::string& race) {
     int approved = 0, total = 0;
-    for (const auto &u : users) {
-        if (u.race == race) {
-            if (u.credit_score >= 700) // approval threshold
+
+    for (const auto& user : users) {
+        if (user.race == race) {
+            if (user.credit_score >= 700) { // approval threshold
                 approved++;
+            }
             total++;
         }
     }
-    if (total == 0) return 0.0;
-    return static_cast<double>(approved) / total;
+
+    return total > 0 ? static_cast<double>(approved) / total : 0.0; // avoid division by zero
 }
 
-// calculate disparity between two groups. use rcan click on which two groups it
-// wants to compare and we can just generate this
-
-double calculateGroupDisparity(const std::vector<User> &users, const std::string &group1, const std::string &group2) {
+// calculate group disparity between two groups (e.g., race, gender, continent)
+double calculateGroupDisparity(const std::vector<User>& users, const std::string& group1, const std::string& group2) {
     double avgScoreGroup1 = 0, avgScoreGroup2 = 0;
     int countGroup1 = 0, countGroup2 = 0;
 
-    for (const auto &u : users) {
-        if (u.race == group1) {
-            avgScoreGroup1 += u.credit_score;
+    for (const auto& user : users) {
+        if (user.race == group1 || user.continent == group1 || user.gender == group1 || user.age == group1) {
+            avgScoreGroup1 += user.credit_score;
             countGroup1++;
-        } else if (u.race == group2) {
-            avgScoreGroup2 += u.credit_score;
+        } else if (user.race == group2 || user.continent == group2 || user.gender == group2 || user.age == group2) {
+            avgScoreGroup2 += user.credit_score;
             countGroup2++;
         }
     }
-    if(countGroup1 == 0) return 0.0;
-    if(countGroup2 == 0) return 0.0;
+
+    if (countGroup1 == 0 || countGroup2 == 0) return 0.0; // avoid division by zero
 
     avgScoreGroup1 /= countGroup1;
     avgScoreGroup2 /= countGroup2;
 
-    return avgScoreGroup1 / avgScoreGroup2;
+    return avgScoreGroup2 > 0 ? avgScoreGroup1 / avgScoreGroup2 : 0.0; // avoid division by zero
 }
 
-double calculateAgeAvg(const std::vector<User> &users, const int &age) {
-    int approved = 0, total = 0;
-    for (const auto &u : users) {
-        if (u.age == age) {
-            approved += u.credit_score;
-            total++;
+
+// calculate average credit score for a specific age
+double calculateAgeAvg(const std::vector<User>& users, std::string age) {
+    int totalScore = 0, count = 0;
+
+    for (const auto& user : users) {
+        if (user.age == age) {
+            totalScore += user.credit_score;
+            count++;
         }
     }
-    if (total == 0) return 0.0;
 
-    return static_cast<double>(approved) / total;
+    return count > 0 ? static_cast<double>(totalScore) / count : 0.0; // avoid division by zero
 }
 
-double calculateGenderAvg(const std::vector<User> &users, const std::string &gender) {
-    int approved = 0, total = 0;
-    for (const auto &u : users) {
-        if (u.gender == gender) {
-            approved += u.credit_score;
-            total++;
+// calculate average credit score for a specific gender
+double calculateGenderAvg(const std::vector<User>& users, const std::string& gender) {
+    int totalScore = 0, count = 0;
+
+    for (const auto& user : users) {
+        if (user.gender == gender) {
+            totalScore += user.credit_score;
+            count++;
         }
     }
-    if (total == 0) return 0.0;
-    return static_cast<double>(approved) / total;
+
+    return count > 0 ? static_cast<double>(totalScore) / count : 0.0; // avoid division by zero
 }
 
-double calculateRaceAvg(const std::vector<User> &users, const std::string &race) {
-    int approved = 0, total = 0;
-    for (const auto &u : users) {
-        if (u.race == race) {
-            approved += u.credit_score;
-            total++;
+// calculate average credit score for a specific race
+double calculateRaceAvg(const std::vector<User>& users, const std::string& race) {
+    int totalScore = 0, count = 0;
+
+    for (const auto& user : users) {
+        if (user.race == race) {
+            totalScore += user.credit_score;
+            count++;
         }
     }
-    if (total == 0) return 0.0;
-    return static_cast<double>(approved) / total;
+
+    return count > 0 ? static_cast<double>(totalScore) / count : 0.0; // avoid division by zero
 }
 
-// assign letter grade based off of how low the bias is
+// assign a letter grade based on bias metrics (false positive rate and disparity)
 std::string assignLetterGrade(double fpr, double disparity) {
-    // fpr = false positive rate
     if (fpr <= 0.1 && disparity >= 0.9)
         return "A";
     else if (fpr <= 0.2 && disparity >= 0.8)

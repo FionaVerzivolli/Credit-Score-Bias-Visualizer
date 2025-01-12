@@ -11,20 +11,29 @@ Contains all the important information
 class User {
 public:
     int user_id;
-    int age;
+    std::string age; // changed from int to string to hold the category
     std::string race;
-    std::string continent; // focus on african communities
+    std::string continent;
     std::string gender;
-    double economic_situation; // still don't know how exactly we are meant to quantify this
+    double economic_situation;
     int credit_score;
-    bool loan_rejected; // if they have been rejected from a loan before, but i think this is the same as defaulted
-    bool defaulted; // whether theyre defaulted or not
-    
-    //constructor
+    bool loan_rejected;
+    bool defaulted;
+
+    // constructor
     User(int id, int a, std::string r, std::string c, std::string g, double econ, int score, bool reject_rate, bool def)
-        : user_id(id), age(a), race(r), continent(c), gender(g), economic_situation(econ),
-         credit_score(score), loan_rejected(reject_rate), defaulted(def) {}
+        : user_id(id), race(r), continent(c), gender(g), economic_situation(econ),
+          credit_score(score), loan_rejected(reject_rate), defaulted(def) {
+        if (a <= 12) {
+            age = "child";
+        } else if (a <= 17) {
+            age = "adolescent";
+        } else if (a <= 64) {
+            age = "adult";
+        } else {
+            age = "senior";
+        }
+    }
 };
 
 #endif
-
