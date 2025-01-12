@@ -3,7 +3,7 @@
 #include "../src/user.h"
 #include "test_filters.h"
 
-// user matches all filter criteria
+// User matches all filter criteria
 START_TEST(test_userMatchesFilters_all_criteria) {
     User user(1, 34, "white", "north america", "male", 5.0, 400, false, false);
     Filter filter("white", "male", "north america", "adult");
@@ -12,7 +12,7 @@ START_TEST(test_userMatchesFilters_all_criteria) {
 }
 END_TEST
 
-// user does not match race filter
+// User does not match race filter
 START_TEST(test_userMatchesFilters_race_mismatch) {
     User user(1, 34, "asian", "north america", "male", 5.0, 400, false, false);
     Filter filter("white", "male", "north america", "adult");
