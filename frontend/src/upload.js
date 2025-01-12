@@ -8,6 +8,7 @@ import ChartComponent from "./ChartComponent"; // Import ChartComponent
 
 
 function Upload() {
+  const { user } = useAuth0();
   const [file, setFile] = useState(null);
   const [webSocket, setWebSocket] = useState(null);
   const [isWebSocketReady, setIsWebSocketReady] = useState(false);
@@ -102,31 +103,32 @@ const handleSaveSnapshot = () => {
       alert("No file selected. Please upload a file.");
       return;
     }
-
+  
     if (!isWebSocketReady || !webSocket) {
       alert("WebSocket connection is not ready. Please try again.");
       return;
     }
-
+  
     const reader = new FileReader();
-
+  
     reader.onload = (e) => {
       const fileContent = e.target.result;
-
+  
       console.log("File Name:", file.name);
       console.log("File Content:", fileContent);
-
+  
       try {
         console.log("Sending file content to the server...");
         webSocket.send(
           JSON.stringify({
             fileName: file.name,
             content: fileContent,
+            userId: user?.sub, // Include user.sub in the payload
           })
         );
-
+  
         alert("File uploaded successfully!");
-
+  
         // Simulate receiving metrics and grade
         setMetrics({
           falsePositiveRate: 0.25,
@@ -139,14 +141,15 @@ const handleSaveSnapshot = () => {
         alert("Failed to upload the file.");
       }
     };
-
+  
     reader.onerror = () => {
       console.error("Error reading file.");
       alert("Failed to read the file. Please try again.");
     };
-
+  
     reader.readAsText(file);
   };
+  
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -171,6 +174,7 @@ const handleSaveSnapshot = () => {
     const payload = {
       filters: { gender, continent, ageGroup, race },
       fileContent, // Use parsed content from state
+      userId: user?.sub, // Include user.sub in the payload
     };
   
     fetch("http://127.0.0.1:5000/api/filter", {
@@ -198,6 +202,7 @@ const handleSaveSnapshot = () => {
         alert("Failed to apply filters. Please try again.");
       });
   };
+  
   
 
 

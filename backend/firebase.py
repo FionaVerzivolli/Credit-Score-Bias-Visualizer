@@ -10,15 +10,40 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': "URL to database"
 })
 
-# Function to retrieve data from a given reference
-def get_data(reference_path):
+# Function to retrieve all references containing the user.sub
+def get_data_with_user_sub(reference_path, user_sub):
     try:
         ref = db.reference(reference_path)
         data = ref.get()
-        return data
+
+        if not data:
+            print(f"No data found at {reference_path}")
+            return None
+
+        # Search for references that contain the user.sub
+        matching_references = {}
+
+        def find_matches(data, path=""):
+            if isinstance(data, dict):
+                for key, value in data.items():
+                    new_path = f"{path}/{key}" if path else key
+                    if user_sub in str(key) or user_sub in str(value):
+                        matching_references[new_path] = value
+                    find_matches(value, new_path)
+
+        find_matches(data)
+
+        if not matching_references:
+            print(f"No matching references found for user.sub: {user_sub}")
+        else:
+            print(f"Found {len(matching_references)} matching references for user.sub: {user_sub}")
+        
+        return matching_references
+
     except Exception as e:
-        print(f"Error retrieving data from {reference_path}: {e}")
+        print(f"Error retrieving data with user.sub {user_sub}: {e}")
         return None
+
 
 # Function to save data to a given reference
 def save_data(reference_path, data):
