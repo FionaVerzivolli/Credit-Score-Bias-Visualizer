@@ -17,11 +17,13 @@ const Home = () => {
       <div className="intro-section">
         <h1 className="home-title">NSBE X P&G Equity Challenge</h1>
         <p className="home-text">
-          Discover insights into systemic bias. Upload your dataset to start
+          Discover insights into systemic bias, specifically regarding credit score, loans, and how 
+          these biases adversely affect African communities. Upload your dataset to start
           exploring or view existing datasets for analysis. This platform is
           designed to evaluate fairness metrics like False Positive Rate,
           Demographic Parity, and Group Disparity, empowering equity in
-          financial services.
+          financial services. Simply click learn more to learn how these metrics are
+          calculated. We hope that this tool will be used
         </p>
         <div className="buttonContainer">
           <Link to="/instructions" className="buttonStyle">

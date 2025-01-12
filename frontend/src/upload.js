@@ -10,6 +10,7 @@ import ChartComponent from "./ChartComponent"; // Import ChartComponent
 function Upload() {
   const [file, setFile] = useState(null);
   const [webSocket, setWebSocket] = useState(null);
+  const [chartKey, setChartKey] = useState(0); // Unique key for ChartComponent
   const [isWebSocketReady, setIsWebSocketReady] = useState(false);
   const [filters, setFilters] = useState({
     gender: "",
@@ -191,6 +192,7 @@ const handleSaveSnapshot = () => {
           groupDisparity: snapshot.metrics.groupDisparity,
         });
         setOverallGrade(snapshot.overallGrade);
+        setChartKey((prevKey) => prevKey + 1); // Increment chartKey to force ChartComponent re-render
         alert("Filters applied successfully!");
       })
       .catch((error) => {
@@ -314,7 +316,17 @@ const handleSaveSnapshot = () => {
     <div>Group Disparity: {metrics.groupDisparity || "N/A"}</div>
     <div>Overall Grade: {overallGrade || "N/A"}</div>
   </div>
-
+    </section>
+    
+    <div className="chart-display">
+    <ChartComponent key={chartKey} filtered_data={[
+    metrics.falsePositiveRate || 0,
+    metrics.demographicParity || 0,
+    metrics.groupDisparity || 0,
+  ]}/>
+  </div>
+  
+  <section>
   {/* Save Snapshot Section */}
   <div className="save-snapshot">
     <input
@@ -327,8 +339,6 @@ const handleSaveSnapshot = () => {
     <button onClick={handleSaveSnapshot} className="snapshot-button">
       Save Snapshot
     </button>
-    </div><div>
-    <ChartComponent metrics={metrics} />
     </div>
 </section>
 </main>
