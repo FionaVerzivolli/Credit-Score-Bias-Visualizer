@@ -4,18 +4,18 @@ import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
-const ChartComponent = () => {
+const ChartComponent = ({filtered_data = []}) => {
   useEffect(() => {
     const ctx = document.getElementById("chartCanvas").getContext("2d");
 
     new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["Metric 1", "Metric 2", "Metric 3"],
+        labels: ["False Positive Rate", "Demographic Parity", "Group Disparity"],
         datasets: [
           {
-            label: "Sample Data",
-            data: [12, 19, 7],
+            label: "Filtered Data",
+            data: filtered_data,
             backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
             borderColor: ["#FF6384", "#36A2EB", "#FFCE56"],
             borderWidth: 1,
@@ -29,8 +29,7 @@ const ChartComponent = () => {
             position: "top",
           },
           title: {
-            display: true,
-            text: "Sample Chart",
+            text: "Filtered Data",
           },
         },
       },
