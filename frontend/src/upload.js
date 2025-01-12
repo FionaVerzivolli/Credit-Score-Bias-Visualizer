@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
 import { getWebSocket } from "./utils/websocket";
+import ChartComponent from "./ChartComponent"; // Import ChartComponent
+
 
 
 function Upload() {
@@ -175,10 +177,6 @@ const handleSaveSnapshot = () => {
         <section className="data-upload">
           <h2>Upload Dataset in JSON</h2>
           <input type="file" accept=".json" onChange={handleFileChange} />
-          <button onClick={handleUpload} disabled={!isWebSocketReady}>
-            Upload
-          </button>
-          {!isWebSocketReady}
         </section>
 
         {/* Filter Section */}
@@ -282,13 +280,19 @@ const handleSaveSnapshot = () => {
   </div>
 </section>
 
-      </main>
+</main>
 
-      <footer>
-        <p>&copy; 2025 Bias Visualizer Project</p>
-      </footer>
-    </div>
-  );
+{/* Chart Section */}
+<section className="chart-section">
+  <h3>Visualized Metrics</h3>
+  <ChartComponent metrics={metrics} />
+</section>
+
+<footer>
+  <p>&copy; 2025 Bias Visualizer Project</p>
+</footer>
+</div>
+);
 }
 
 export default Upload;
