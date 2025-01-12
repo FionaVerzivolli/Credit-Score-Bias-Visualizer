@@ -35,7 +35,13 @@
   line-height: 1.6;
   margin-bottom: 20px;
 }
-
+.snapshot-text {
+  font-size: 1.2rem;
+  color: #495057; /* Medium gray */
+  line-height: 1.6;
+  max-width: 35vw;
+  margin-bottom: 20px;
+}
 /* Button Container Styling */
 .buttonContainer {
   display: flex;
@@ -96,4 +102,96 @@
 .logout-button:active {
   background-color: #282c34; /* Darker color for active state */
   transform: translateY(0);
+}
+/* Snapshots Section */
+.snapshots-section {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping to next line */
+  justify-content: space-between; /* Space between elements */
+  gap: 20px; /* Spacing between rectangles */
+  max-width: 1200px; /* Adjust max width for layout */
+  margin: 30px auto;
+  padding: 20px;
+}
+
+/* Snapshot Rectangle Styling */
+.snapshot-rectangle {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: calc(33% - 20px); /* 3 rectangles per row, accounting for gap */
+  min-width: 250px; /* Minimum width for smaller screens */
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.snapshot-rectangle:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.snapshot-title {
+  font-size: 1.5rem;
+  color: #282c34;
+  margin-bottom: 10px;
+}
+
+.snapshot-rectangle p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Snapshots Scrollable Container */
+.snapshots-scrollable {
+  max-height: 600px; /* Limit height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Space between items */
+  justify-items: center; /* Center items in their grid cells */
+}
+/* Snapshot Rectangle Styling */
+.snapshot-rectangle {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  width: 100%; /* Full width of grid cell */
+}
+
+.snapshot-rectangle:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.snapshot-title {
+  font-size: 1.5rem;
+  color: #282c34;
+  margin-bottom: 10px;
+}
+
+.snapshot-rectangle p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #333;
+}
+.intro-desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items to the top */
+  align-items: center; /* Center horizontally */
+  margin-top: 0; /* Remove any margin */
+  padding-top: 20px; /* Add some padding at the top */
+  text-align: center; /* Center the text inside the div */
+  width: 100%; /* Ensure it spans the full width */
 }
