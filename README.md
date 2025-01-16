@@ -20,7 +20,7 @@ We built Equalizer using the following technologies:
 - **Hosting:** The application is hosted on PythonAnywhere for reliable access.
 - **Authentication:** Auth0 for secure user login and account management.
 
-The workflow involves uploading datasets through the React frontend, which are then processed by Python algorithms in the backend. Results are visualized using Chart.js, reports are generated, and snapshots are saved in the database for future reference, so users can assess whether their service or product has improved. Each user has their own account registered using Auth0 where they can store the snapshots.
+The workflow involves uploading datasets through the React frontend, which are then processed by Python algorithms in the backend. Results are visualized using Chart.js, reports are generated, and snapshots are saved in the database for future reference.
 
 ## What’s Next for Equalizer
 We envision several enhancements to make Equalizer even more impactful:
