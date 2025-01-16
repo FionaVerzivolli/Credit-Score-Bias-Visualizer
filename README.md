@@ -21,32 +21,7 @@ We built Equalizer using the following technologies:
 - **Hosting:** The application is hosted on PythonAnywhere for reliable access.
 - **Authentication:** Auth0 for secure user login and account management.
 
-The workflow involves uploading datasets through the React frontend, which are then processed by Python algorithms in the backend. Results are visualized, reports are generated, and snapshots are saved in the database for future reference.
-
-![image](https://github.com/user-attachments/assets/fa0d9896-ed53-4062-9ee1-ce2a88488cb2)
-
-## Challenges We Faced
-Building Equalizer was not without its challenges:
-- **Time Constraints:** Completing the project within a limited timeframe required efficient planning and execution.
-- **Technical Hurdles:** Integrating unfamiliar technologies and troubleshooting issues with third-party APIs was a significant learning curve.
-- **Optimizing User Experience:** Designing a user-friendly interface that is both functional and aesthetically pleasing was a rewarding but challenging task.
-
-## Accomplishments We’re Proud Of
-- **Embracing New Technologies:** We successfully leveraged tools and frameworks we hadn’t used before, gaining valuable experience.
-- **Integration of APIs:** Seamlessly connecting third-party services and ensuring smooth communication between components.
-- **User-Centric Design:** Creating an intuitive and visually appealing interface to enhance the user experience.
-- **Resilience:** Overcoming unexpected roadblocks, including debugging complex errors and adapting to technology limitations.
-
-![image](https://github.com/user-attachments/assets/03ae0c15-08a6-4a47-be28-7390b4349a12)
-
-## What We Learned
-This project taught us how to:
-- Collaborate effectively under tight deadlines.
-- Work with online databases to improve user experience.
-- Deploy and maintain web applications, gaining insights into hosting and scalability considerations.
-- Recognize and address implicit biases through data analysis.
-  
-![image](https://github.com/user-attachments/assets/a22e5c1f-b0ec-4a40-afa1-b14441090e0f)
+The workflow involves uploading datasets through the React frontend, which are then processed by Python algorithms in the backend. Results are visualized using Chart.js, reports are generated, and snapshots are saved in the database for future reference, so users can assess whether their service or product has improved. Each user has their own account registered using Auth0 where they can store the snapshots. Flask is used to link the frontend and backend together, and PythonAnywhere is used for deployment,
 
 ## What’s Next for Equalizer
 We envision several enhancements to make Equalizer even more impactful:
